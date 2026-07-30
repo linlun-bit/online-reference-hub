@@ -2,171 +2,140 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Reference Hub — Northbrook Public Library</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Online Reference Hub &mdash; Northbrook Public Library</title>
 <style>
-  :root{--g:#2e6b3e;--gd:#1e4a2a;--gl:#e8f2eb;--gold:#b8860b;--goldf:#fdf6e3;--red:#c0392b;--t:#1a1a1a;--m:#555;--b:#d0d8d2;--bg:#f7f9f8;--w:#fff;--r:8px;--sh:0 2px 8px rgba(0,0,0,.08)}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t);min-height:100vh}
-
-  /* SCREENS */
-  .screen{position:fixed;inset:0;background:var(--g);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1.5rem}
-  .screen.off{display:none}
-  .box{background:var(--w);border-radius:14px;padding:2.5rem 2.2rem;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,.28);display:flex;flex-direction:column;align-items:center;gap:1.1rem}
-  .box-logo{font-size:2.4rem;line-height:1}
-  .box-title{font-size:1.15rem;font-weight:700;color:var(--gd);text-align:center;line-height:1.3}
-  .box-sub{font-size:.82rem;color:var(--m);text-align:center}
-  .box form,.box .form-inner{width:100%;display:flex;flex-direction:column;gap:.85rem}
-  .lf label{font-size:.78rem;font-weight:600;color:var(--gd);display:block;margin-bottom:.28rem}
-  .lf input,.lf select{width:100%;border:1.5px solid var(--b);border-radius:6px;padding:.55rem .8rem;font-size:.92rem}
-  .lf input:focus,.lf select:focus{outline:2px solid var(--g);border-color:var(--g)}
-  .btn-primary{background:var(--g);color:var(--w);border:none;border-radius:7px;padding:.65rem;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;transition:background .15s}
-  .btn-primary:hover{background:var(--gd)}
-  .btn-primary:disabled{background:var(--m);cursor:not-allowed}
-  .box-err{background:#f8d7da;color:var(--red);border-radius:6px;padding:.5rem .8rem;font-size:.83rem;text-align:center;display:none;width:100%}
-  .box-err.show{display:block}
-  .mod-field{display:none}
-  .mod-hint{background:var(--goldf);border:1px solid var(--gold);border-radius:6px;padding:.45rem .75rem;font-size:.8rem;color:#5a4000;display:none;width:100%;text-align:center}
-  .shake{animation:shake .35s ease}
-  @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
-
-  /* APP */
-  #app{display:none}
-
-  /* HEADER */
-  header{background:var(--g);color:var(--w);padding:0 2rem;display:flex;align-items:center;gap:1.2rem;height:64px;box-shadow:0 2px 6px rgba(0,0,0,.18);position:sticky;top:0;z-index:100}
-  .logo{width:40px;height:40px;background:var(--w);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-  header h1{font-size:1.15rem;font-weight:700;flex:1}
-  header small{font-size:.78rem;opacity:.8}
-  .hdr-right{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
-  .hdr-user{font-size:.8rem;opacity:.9;white-space:nowrap}
-  .mod-pill{background:var(--gold);color:var(--w);font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;vertical-align:middle}
-  .btn-logout{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:var(--w);border-radius:5px;padding:.3rem .8rem;font-size:.78rem;cursor:pointer;white-space:nowrap}
-  .btn-logout:hover{background:rgba(255,255,255,.3)}
-
-  /* NAV */
-  nav{background:var(--gd);display:flex;padding:0 2rem;flex-wrap:wrap}
-  nav button{background:none;border:none;color:rgba(255,255,255,.7);padding:.7rem 1.1rem;font-size:.86rem;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s}
-  nav button:hover{color:var(--w);background:rgba(255,255,255,.07)}
-  nav button.on{color:var(--w);border-bottom-color:var(--gold)}
-
-  /* MAIN */
-  main{max-width:1200px;margin:0 auto;padding:1.5rem 1.5rem 3rem}
-  .pane{display:none}.pane.on{display:block}
-  .stitle{font-size:1.3rem;font-weight:700;color:var(--gd);margin-bottom:.3rem}
-  .sdesc{color:var(--m);font-size:.88rem;margin-bottom:1.2rem}
-
-  /* FILTER BAR */
-  .fbar{background:var(--w);border:1px solid var(--b);border-radius:var(--r);padding:1rem 1.2rem;display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end;margin-bottom:1.2rem;box-shadow:var(--sh)}
-  .fbar label{font-size:.78rem;font-weight:600;color:var(--gd);display:block;margin-bottom:.25rem}
-  .fbar input,.fbar select{border:1px solid var(--b);border-radius:5px;padding:.42rem .7rem;font-size:.88rem;background:var(--w);min-width:160px}
-  .fbar input:focus,.fbar select:focus{outline:2px solid var(--g)}
-  .fg{display:flex;flex-direction:column}
-  .bclear{background:none;border:1px solid var(--b);border-radius:5px;padding:.42rem .9rem;font-size:.82rem;color:var(--m);cursor:pointer;align-self:flex-end}
-  .bclear:hover{border-color:var(--g);color:var(--g)}
-  .fcnt{align-self:flex-end;font-size:.82rem;color:var(--m);padding-bottom:.45rem;margin-left:auto}
-  .toggle-hidden{display:flex;align-items:center;gap:.5rem;align-self:flex-end;padding-bottom:.45rem;font-size:.82rem;color:var(--m);cursor:pointer;user-select:none}
-  .toggle-hidden input{cursor:pointer;accent-color:var(--g)}
-
-  /* GRID */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem}
-  .card{background:var(--w);border:1px solid var(--b);border-radius:var(--r);padding:1.1rem 1.2rem;box-shadow:var(--sh);display:flex;flex-direction:column;gap:.45rem;cursor:pointer;transition:box-shadow .15s,border-color .15s;position:relative}
-  .card:hover{box-shadow:0 4px 16px rgba(46,107,62,.13);border-color:var(--g)}
-  .card.hidden-resource{opacity:.45;border-style:dashed}
-  .ctop{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem}
-  .cname{font-weight:700;font-size:.97rem;color:var(--gd);line-height:1.3}
-  .tags{display:flex;gap:.35rem;flex-wrap:wrap}
-  .tag{font-size:.72rem;padding:.2rem .55rem;border-radius:20px;font-weight:600}
-  .ts{background:var(--gl);color:var(--gd)}.tr2{background:var(--goldf);color:var(--gold);border:1px solid #e0c97a}
-  .cdesc{font-size:.82rem;color:var(--m);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .clink{font-size:.8rem;color:var(--g);font-weight:500;text-decoration:underline;cursor:pointer}
-  .cnt{font-size:.75rem;color:var(--m)}
-  .stars{color:var(--gold);letter-spacing:-1px}.stars .e{color:#ccc}
-  .nores{text-align:center;padding:3rem;color:var(--m);font-size:.95rem}
-  .card-mod-actions{display:none;position:absolute;top:.6rem;right:.6rem;gap:.3rem}
-  .card-mod-actions.show{display:flex}
-  .btn-card-mod{background:rgba(255,255,255,.92);border:1px solid var(--b);border-radius:4px;padding:.18rem .45rem;font-size:.7rem;color:var(--m);cursor:pointer;transition:all .12s}
-  .btn-card-mod:hover{border-color:var(--red);color:var(--red)}
-  .btn-card-mod.restore:hover{border-color:var(--g);color:var(--g)}
-  .hidden-badge-res{background:#fee;color:var(--red);font-size:.68rem;font-weight:600;padding:.15rem .45rem;border-radius:10px;margin-left:.3rem}
-
-  /* MODAL */
-  .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:1rem}
-  .ov.on{display:flex}
-  .modal{background:var(--w);border-radius:12px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.22)}
-  .mh{background:var(--g);color:var(--w);padding:1.1rem 1.4rem;border-radius:12px 12px 0 0;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
-  .mh h2{font-size:1.05rem;font-weight:700;line-height:1.3}
-  .mx{background:none;border:none;color:var(--w);font-size:1.4rem;cursor:pointer;opacity:.8;line-height:1}
-  .mx:hover{opacity:1}
-  .mb{padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:1.1rem}
-  .mdesc{font-size:.9rem;color:var(--m);line-height:1.6}
-  .murl{font-size:.88rem;color:var(--g);word-break:break-all;text-decoration:underline;cursor:pointer}
-  .ri{background:var(--gl);border-radius:6px;padding:.7rem .9rem;font-size:.85rem}
-  .ri.is-hidden{background:#f5f5f5;border:1px dashed #ccc;opacity:.65}
-  .rit{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.25rem;gap:.5rem}
-  .ris{font-weight:700;color:var(--gd)}.rits{font-size:.75rem;color:var(--m)}
-  .ri-actions{display:flex;gap:.4rem;flex-shrink:0}
-  .btn-hide{background:none;border:1px solid var(--b);border-radius:4px;padding:.18rem .5rem;font-size:.72rem;color:var(--m);cursor:pointer;transition:all .12s}
-  .btn-hide:hover{border-color:var(--red);color:var(--red)}
-  .btn-hide.unhide:hover{border-color:var(--g);color:var(--g)}
-  .hidden-badge{font-size:.7rem;color:#999;font-style:italic;margin-left:.3rem}
-
-  /* TABLE */
-  table{width:100%;border-collapse:collapse;font-size:.87rem;background:var(--w);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
-  th{background:var(--g);color:var(--w);padding:.7rem 1rem;text-align:left;font-weight:600;font-size:.82rem}
-  td{padding:.65rem 1rem;border-bottom:1px solid var(--b);vertical-align:top}
-  tr:last-child td{border-bottom:none}
-  tr:hover td{background:var(--gl)}
-  .row-hidden td{opacity:.5;font-style:italic}
-  .row-hidden:hover td{background:#f5f5f5}
-  .tbl-hide{background:none;border:1px solid var(--b);border-radius:4px;padding:.15rem .45rem;font-size:.72rem;color:var(--m);cursor:pointer;transition:all .12s;white-space:nowrap}
-  .tbl-hide:hover{border-color:var(--red);color:var(--red)}
-  .tbl-hide.unhide:hover{border-color:var(--g);color:var(--g)}
-
-  /* FORMS */
-  .scard{background:var(--w);border:1px solid var(--b);border-radius:var(--r);padding:1.4rem 1.5rem;box-shadow:var(--sh);max-width:600px}
-  .ftitle{font-size:1.05rem;font-weight:700;color:var(--gd);margin-bottom:1rem}
-  .fr{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.85rem}
-  .fr label{font-size:.8rem;font-weight:600;color:var(--gd)}
-  .fr select,.fr textarea,.fr input[type=text],.fr input[type=url]{border:1px solid var(--b);border-radius:5px;padding:.5rem .75rem;font-size:.9rem;background:var(--w);width:100%}
-  .fr select:focus,.fr textarea:focus,.fr input:focus{outline:2px solid var(--g)}
-  .fr textarea{min-height:75px;resize:vertical}
-  .fr .hint{font-size:.75rem;color:var(--m);margin-top:.2rem}
-  .fr-row{display:flex;gap:.5rem;align-items:flex-end}
-  .fr-row .fr{flex:1;margin-bottom:0}
-  .sp{display:flex;gap:.35rem}
-  .sp button{background:none;border:none;font-size:1.5rem;cursor:pointer;color:#ccc;padding:0;line-height:1;transition:color .1s}
-  .sp button.lit{color:var(--gold)}
-  .bsub{background:var(--g);color:var(--w);border:none;border-radius:6px;padding:.6rem 1.5rem;font-size:.92rem;font-weight:600;cursor:pointer;margin-top:.3rem}
-  .bsub:hover{background:var(--gd)}.bsub:disabled{background:var(--m);cursor:not-allowed}
-  .fst{margin-top:.7rem;padding:.6rem .9rem;border-radius:5px;font-size:.85rem;display:none}
-  .fst.ok{background:#d4edda;color:#155724;display:block}
-  .fst.err{background:#f8d7da;color:var(--red);display:block}
-  .fst.load{background:var(--gl);color:var(--gd);display:block}
-
-  /* PAT BANNER */
-  .pbanner{background:var(--goldf);border:1px solid var(--gold);border-radius:var(--r);padding:.9rem 1.1rem;font-size:.85rem;color:#5a4000;margin-bottom:1.2rem}
-  .pbanner strong{display:block;margin-bottom:.4rem}
-  .prow{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap;align-items:center}
-  .prow input{border:1px solid var(--gold);border-radius:5px;padding:.38rem .6rem;font-size:.83rem;font-family:monospace;background:var(--w);flex:1;min-width:200px}
-  .bpat{background:var(--gold);color:var(--w);border:none;border-radius:5px;padding:.38rem .9rem;font-size:.83rem;font-weight:600;cursor:pointer}
-  .bpat:hover{background:#9a7009}
-  .tok{color:#155724;font-size:.82rem;font-weight:600;margin-top:.4rem;display:none}
-
-  @media(max-width:680px){
-    header{padding:0 1rem}.hdr-user{display:none}
-    nav{padding:0 .25rem}nav button{padding:.65rem .7rem;font-size:.78rem}
-    main{padding:1rem .75rem 2rem}.grid{grid-template-columns:1fr}.fbar{flex-direction:column}
-  }
+:root{--g:#2e6b3e;--gd:#1e4a2a;--gl:#e8f2eb;--gold:#b8860b;--goldf:#fdf6e3;--red:#c0392b;--t:#1a1a1a;--m:#555;--b:#d0d8d2;--bg:#f7f9f8;--w:#fff;--r:8px;--sh:0 2px 8px rgba(0,0,0,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t);min-height:100vh}
+.screen{position:fixed;inset:0;background:var(--g);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1.5rem}
+.screen.off{display:none}
+.box{background:var(--w);border-radius:14px;padding:2.5rem 2.2rem;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,.28);display:flex;flex-direction:column;align-items:center;gap:1.1rem}
+.box-logo{font-size:2.4rem;line-height:1}
+.box-title{font-size:1.15rem;font-weight:700;color:var(--gd);text-align:center;line-height:1.3}
+.box-sub{font-size:.82rem;color:var(--m);text-align:center}
+.box form,.box .form-inner{width:100%;display:flex;flex-direction:column;gap:.85rem}
+.lf label{font-size:.78rem;font-weight:600;color:var(--gd);display:block;margin-bottom:.28rem}
+.lf input,.lf select{width:100%;border:1.5px solid var(--b);border-radius:6px;padding:.55rem .8rem;font-size:.92rem}
+.lf input:focus,.lf select:focus{outline:2px solid var(--g);border-color:var(--g)}
+.btn-primary{background:var(--g);color:var(--w);border:none;border-radius:7px;padding:.65rem;font-size:.95rem;font-weight:700;cursor:pointer;width:100%;transition:background .15s}
+.btn-primary:hover{background:var(--gd)}
+.box-err{background:#f8d7da;color:var(--red);border-radius:6px;padding:.5rem .8rem;font-size:.83rem;text-align:center;display:none;width:100%}
+.box-err.show{display:block}
+.mod-field{display:none}
+.mod-hint{background:var(--goldf);border:1px solid var(--gold);border-radius:6px;padding:.45rem .75rem;font-size:.8rem;color:#5a4000;display:none;width:100%;text-align:center}
+.shake{animation:shake .35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+#app{display:none}
+header{background:var(--g);color:var(--w);padding:0 2rem;display:flex;align-items:center;gap:1.2rem;height:64px;box-shadow:0 2px 6px rgba(0,0,0,.18);position:sticky;top:0;z-index:100}
+.logo{width:40px;height:40px;background:var(--w);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+header h1{font-size:1.15rem;font-weight:700;flex:1}
+.hdr-right{display:flex;align-items:center;gap:.75rem;flex-shrink:0}
+.hdr-user{font-size:.8rem;opacity:.9;white-space:nowrap}
+.mod-pill{background:var(--gold);color:var(--w);font-size:.7rem;font-weight:700;padding:.15rem .5rem;border-radius:20px;vertical-align:middle}
+.btn-logout{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:var(--w);border-radius:5px;padding:.3rem .8rem;font-size:.78rem;cursor:pointer}
+.btn-logout:hover{background:rgba(255,255,255,.3)}
+nav{background:var(--gd);display:flex;padding:0 2rem;flex-wrap:wrap}
+nav button{background:none;border:none;color:rgba(255,255,255,.7);padding:.7rem 1.1rem;font-size:.86rem;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s}
+nav button:hover{color:var(--w);background:rgba(255,255,255,.07)}
+nav button.on{color:var(--w);border-bottom-color:var(--gold)}
+main{max-width:1200px;margin:0 auto;padding:1.5rem 1.5rem 3rem}
+.pane{display:none}.pane.on{display:block}
+.stitle{font-size:1.3rem;font-weight:700;color:var(--gd);margin-bottom:.3rem}
+.sdesc{color:var(--m);font-size:.88rem;margin-bottom:1.2rem}
+.fbar{background:var(--w);border:1px solid var(--b);border-radius:var(--r);padding:1rem 1.2rem;display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end;margin-bottom:1.2rem;box-shadow:var(--sh)}
+.fbar label{font-size:.78rem;font-weight:600;color:var(--gd);display:block;margin-bottom:.25rem}
+.fbar input,.fbar select{border:1px solid var(--b);border-radius:5px;padding:.42rem .7rem;font-size:.88rem;background:var(--w);min-width:160px}
+.fg{display:flex;flex-direction:column}
+.bclear{background:none;border:1px solid var(--b);border-radius:5px;padding:.42rem .9rem;font-size:.82rem;color:var(--m);cursor:pointer;align-self:flex-end}
+.bclear:hover{border-color:var(--g);color:var(--g)}
+.fcnt{align-self:flex-end;font-size:.82rem;color:var(--m);padding-bottom:.45rem;margin-left:auto}
+.toggle-hidden{display:flex;align-items:center;gap:.5rem;align-self:flex-end;padding-bottom:.45rem;font-size:.82rem;color:var(--m);cursor:pointer;user-select:none}
+.toggle-hidden input{cursor:pointer;accent-color:var(--g)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem}
+.card{background:var(--w);border:1px solid var(--b);border-radius:var(--r);padding:1.1rem 1.2rem;box-shadow:var(--sh);display:flex;flex-direction:column;gap:.45rem;cursor:pointer;transition:box-shadow .15s,border-color .15s;position:relative}
+.card:hover{box-shadow:0 4px 16px rgba(46,107,62,.13);border-color:var(--g)}
+.card.hidden-resource{opacity:.45;border-style:dashed}
+.ctop{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem}
+.cname{font-weight:700;font-size:.97rem;color:var(--gd);line-height:1.3}
+.tags{display:flex;gap:.35rem;flex-wrap:wrap}
+.tag{font-size:.72rem;padding:.2rem .55rem;border-radius:20px;font-weight:600}
+.ts{background:var(--gl);color:var(--gd)}.tr2{background:var(--goldf);color:var(--gold);border:1px solid #e0c97a}
+.cdesc{font-size:.82rem;color:var(--m);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.clink{font-size:.8rem;color:var(--g);font-weight:500;text-decoration:underline;cursor:pointer}
+.cnt{font-size:.75rem;color:var(--m)}
+.stars{color:var(--gold);letter-spacing:-1px}.stars .e{color:#ccc}
+.nores{text-align:center;padding:3rem;color:var(--m);font-size:.95rem}
+.card-mod-actions{display:none;position:absolute;top:.6rem;right:.6rem;gap:.3rem}
+.card-mod-actions.show{display:flex}
+.btn-card-mod{background:rgba(255,255,255,.92);border:1px solid var(--b);border-radius:4px;padding:.18rem .45rem;font-size:.7rem;color:var(--m);cursor:pointer}
+.btn-card-mod:hover{border-color:var(--red);color:var(--red)}
+.btn-card-mod.restore:hover{border-color:var(--g);color:var(--g)}
+.hidden-badge-res{background:#fee;color:var(--red);font-size:.68rem;font-weight:600;padding:.15rem .45rem;border-radius:10px;margin-left:.3rem}
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:1rem}
+.ov.on{display:flex}
+.modal{background:var(--w);border-radius:12px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.22)}
+.mh{background:var(--g);color:var(--w);padding:1.1rem 1.4rem;border-radius:12px 12px 0 0;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.mh h2{font-size:1.05rem;font-weight:700;line-height:1.3}
+.mx{background:none;border:none;color:var(--w);font-size:1.4rem;cursor:pointer;opacity:.8;line-height:1}
+.mx:hover{opacity:1}
+.mb{padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:1.1rem}
+.mdesc{font-size:.9rem;color:var(--m);line-height:1.6}
+.murl{font-size:.88rem;color:var(--g);word-break:break-all;text-decoration:underline;cursor:pointer}
+.ri{background:var(--gl);border-radius:6px;padding:.7rem .9rem;font-size:.85rem}
+.rit{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.25rem;gap:.5rem}
+.ris{font-weight:700;color:var(--gd)}.rits{font-size:.75rem;color:var(--m)}
+.ri-actions{display:flex;gap:.4rem;flex-shrink:0}
+.btn-hide{background:none;border:1px solid var(--b);border-radius:4px;padding:.18rem .5rem;font-size:.72rem;color:var(--m);cursor:pointer}
+.btn-hide:hover{border-color:var(--red);color:var(--red)}
+.hidden-badge{font-size:.7rem;color:#999;font-style:italic;margin-left:.3rem}
+table{width:100%;border-collapse:collapse;font-size:.87rem;background:var(--w);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
+th{background:var(--g);color:var(--w);padding:.7rem 1rem;text-align:left;font-weight:600;font-size:.82rem}
+td{padding:.65rem 1rem;border-bottom:1px solid var(--b);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--gl)}
+.row-hidden td{opacity:.5;font-style:italic}
+.tbl-hide{background:none;border:1px solid var(--b);border-radius:4px;padding:.15rem .45rem;font-size:.72rem;color:var(--m);cursor:pointer;white-space:nowrap}
+.tbl-hide:hover{border-color:var(--red);color:var(--red)}
+.scard{background:var(--w);border:1px solid var(--b);border-radius:var(--r);padding:1.4rem 1.5rem;box-shadow:var(--sh);max-width:600px}
+.ftitle{font-size:1.05rem;font-weight:700;color:var(--gd);margin-bottom:1rem}
+.fr{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.85rem}
+.fr label{font-size:.8rem;font-weight:600;color:var(--gd)}
+.fr select,.fr textarea,.fr input[type=text],.fr input[type=url]{border:1px solid var(--b);border-radius:5px;padding:.5rem .75rem;font-size:.9rem;background:var(--w);width:100%}
+.fr select:focus,.fr textarea:focus,.fr input:focus{outline:2px solid var(--g)}
+.fr textarea{min-height:75px;resize:vertical}
+.fr .hint{font-size:.75rem;color:var(--m);margin-top:.2rem}
+.fr-row{display:flex;gap:.5rem;align-items:flex-end}
+.fr-row .fr{flex:1;margin-bottom:0}
+.sp{display:flex;gap:.35rem}
+.sp button{background:none;border:none;font-size:1.5rem;cursor:pointer;color:#ccc;padding:0;line-height:1;transition:color .1s}
+.sp button.lit{color:var(--gold)}
+.bsub{background:var(--g);color:var(--w);border:none;border-radius:6px;padding:.6rem 1.5rem;font-size:.92rem;font-weight:600;cursor:pointer;margin-top:.3rem}
+.bsub:hover{background:var(--gd)}.bsub:disabled{background:var(--m);cursor:not-allowed}
+.fst{margin-top:.7rem;padding:.6rem .9rem;border-radius:5px;font-size:.85rem;display:none}
+.fst.ok{background:#d4edda;color:#155724;display:block}
+.fst.err{background:#f8d7da;color:var(--red);display:block}
+.fst.load{background:var(--gl);color:var(--gd);display:block}
+.pbanner{background:var(--goldf);border:1px solid var(--gold);border-radius:var(--r);padding:.9rem 1.1rem;font-size:.85rem;color:#5a4000;margin-bottom:1.2rem}
+.pbanner strong{display:block;margin-bottom:.4rem}
+.prow{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap;align-items:center}
+.prow input{border:1px solid var(--gold);border-radius:5px;padding:.38rem .6rem;font-size:.83rem;font-family:monospace;background:var(--w);flex:1;min-width:200px}
+.bpat{background:var(--gold);color:var(--w);border:none;border-radius:5px;padding:.38rem .9rem;font-size:.83rem;font-weight:600;cursor:pointer}
+.bpat:hover{background:#9a7009}
+.tok{color:#155724;font-size:.82rem;font-weight:600;margin-top:.4rem;display:none}
+@media(max-width:680px){
+  header{padding:0 1rem}.hdr-user{display:none}
+  nav{padding:0 .25rem}nav button{padding:.65rem .7rem;font-size:.78rem}
+  main{padding:1rem .75rem 2rem}.grid{grid-template-columns:1fr}.fbar{flex-direction:column}
+}
 </style>
 </head>
 <body>
 
-<!-- SCREEN 1: PASSWORD -->
 <div class="screen" id="s-login">
   <div class="box">
-    <div class="box-logo">📚</div>
-    <div class="box-title">Online Reference Hub<br><span style="font-size:.82rem;font-weight:400;color:var(--m)">Northbrook Public Library — Staff Tool</span></div>
+    <div class="box-logo">&#128218;</div>
+    <div class="box-title">Online Reference Hub<br><span style="font-size:.82rem;font-weight:400;color:var(--m)">Northbrook Public Library &mdash; Staff Tool</span></div>
     <div class="box-sub">Staff access only.</div>
     <form onsubmit="doLogin(event)" style="width:100%">
       <div class="lf"><label>Username</label><input id="l-user" type="text" autocomplete="username" spellcheck="false" required></div>
@@ -177,17 +146,16 @@
   </div>
 </div>
 
-<!-- SCREEN 2: WHO ARE YOU — hard-coded options, available before data loads -->
 <div class="screen off" id="s-who">
   <div class="box">
-    <div class="box-logo">👋</div>
+    <div class="box-logo">&#128075;</div>
     <div class="box-title">Welcome!</div>
-    <div class="box-sub">Select your name. Moderators may enter their mod password below to unlock moderator tools.</div>
+    <div class="box-sub">Select your name. Moderators may enter their mod password below.</div>
     <div class="form-inner">
       <div class="lf">
         <label>Your Name</label>
         <select id="who-sel" onchange="onWhoChange()">
-          <option value="">— Select your name —</option>
+          <option value="">&mdash; Select your name &mdash;</option>
           <option value="Adrienne">Adrienne</option>
           <option value="Amy">Amy</option>
           <option value="Bill">Bill</option>
@@ -216,60 +184,59 @@
       </div>
       <div class="lf mod-field" id="mod-field">
         <label>Moderator Password <span style="font-weight:400;color:var(--m)">(optional)</span></label>
-        <input id="mod-pass" type="password" placeholder="Enter mod password to unlock mod tools…" autocomplete="off">
+        <input id="mod-pass" type="password" placeholder="Enter mod password to unlock mod tools&hellip;" autocomplete="off">
       </div>
-      <div class="mod-hint" id="mod-hint">🛡️ You are listed as a moderator. Enter your mod password to unlock mod tools, or leave blank for standard access.</div>
+      <div class="mod-hint" id="mod-hint">&#128737;&#65039; You are listed as a moderator. Enter your mod password to unlock mod tools, or leave blank for standard access.</div>
       <div class="box-err" id="who-err">Please select your name to continue.</div>
       <button class="btn-primary" onclick="doWho()">Enter Hub</button>
     </div>
   </div>
 </div>
 
-<!-- APP SHELL -->
 <div id="app">
   <header>
-    <div class="logo">📚</div>
-    <div><h1>Online Reference Hub</h1><small>Northbrook Public Library — Staff Tool</small></div>
+    <div class="logo">&#128218;</div>
+    <div><h1>Online Reference Hub</h1><small>Northbrook Public Library &mdash; Staff Tool</small></div>
     <div class="hdr-right">
       <span class="hdr-user" id="hdr-user"></span>
       <button class="btn-logout" onclick="doLogout()">Sign Out</button>
     </div>
   </header>
   <nav>
-    <button class="on" onclick="sw('search',this)">🔍 Search Dashboard</button>
-    <button onclick="sw('remarks',this)">💬 Remarks Log</button>
-    <button onclick="sw('submit',this)">✏️ Submit a Remark</button>
-    <button onclick="sw('newres',this)">➕ Submit an Online Reference</button>
+    <button class="on" onclick="sw('search',this)">&#128269; Search Dashboard</button>
+    <button onclick="sw('remarks',this)">&#128172; Remarks Log</button>
+    <button onclick="sw('submit',this)">&#9998;&#65039; Submit a Remark</button>
+    <button onclick="sw('newres',this)">&#10133; Submit an Online Reference</button>
   </nav>
   <main>
-
-    <!-- SEARCH DASHBOARD -->
     <div class="pane on" id="p-search">
       <p class="stitle">Resource Search Dashboard</p>
       <p class="sdesc">Browse and filter reference resources. Click any card for full details and staff remarks.</p>
       <div class="fbar">
-        <div class="fg"><label>Keyword</label><input id="fk" placeholder="Search name or description…" oninput="af()"></div>
+        <div class="fg"><label>Keyword</label><input id="fk" placeholder="Search name or description&hellip;" oninput="af()"></div>
         <div class="fg"><label>Subject</label><select id="fs" onchange="af()"><option value="">All Subjects</option></select></div>
         <div class="fg"><label>Region</label><select id="fr2" onchange="af()"><option value="">All Regions</option></select></div>
         <div class="fg"><label>Min Rating</label><select id="fm" onchange="af()">
           <option value="0">Any Rating</option>
-          <option value="5">★★★★★ only</option><option value="4">★★★★+</option>
-          <option value="3">★★★+</option><option value="2">★★+</option><option value="1">★+</option>
+          <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; only</option>
+          <option value="4">&#9733;&#9733;&#9733;&#9733;+</option>
+          <option value="3">&#9733;&#9733;&#9733;+</option>
+          <option value="2">&#9733;&#9733;+</option>
+          <option value="1">&#9733;+</option>
         </select></div>
         <button class="bclear" onclick="cf()">Clear</button>
         <span class="fcnt" id="fcnt"></span>
       </div>
       <div id="mod-res-bar" style="display:none;margin-bottom:.9rem">
-        <label class="toggle-hidden"><input type="checkbox" id="show-hidden-res" onchange="af()"> 🛡️ Show hidden resources (mod view)</label>
+        <label class="toggle-hidden"><input type="checkbox" id="show-hidden-res" onchange="af()"> &#128737;&#65039; Show hidden resources (mod view)</label>
       </div>
       <div class="grid" id="grid"></div>
       <div class="nores" id="nores" style="display:none">No resources match your filters.</div>
     </div>
 
-    <!-- REMARKS LOG -->
     <div class="pane" id="p-remarks">
       <p class="stitle">Resource Remarks Log</p>
-      <p class="sdesc">All staff remarks, most recent first. Hide or restore your own remarks using the row controls.</p>
+      <p class="sdesc">All staff remarks, most recent first.</p>
       <div class="fbar">
         <div class="fg"><label>Staff</label><select id="rfs" onchange="arf()"><option value="">All Staff</option></select></div>
         <div class="fg"><label>Resource</label><select id="rfr" onchange="arf()"><option value="">All Resources</option></select></div>
@@ -284,90 +251,82 @@
       <div class="nores" id="rno" style="display:none">No remarks match your filters.</div>
     </div>
 
-    <!-- SUBMIT REMARK -->
     <div class="pane" id="p-submit">
       <p class="stitle">Submit a Remark</p>
       <p class="sdesc">Rate a resource and leave a comment for your colleagues.</p>
       <div class="pbanner" id="pb">
-        <strong>🔑 GitHub Token Required</strong>
-        Enter your GitHub Personal Access Token (PAT) to save data. Kept in memory for this tab only — never stored or logged.
+        <strong>&#128273; GitHub Token Required</strong>
+        Enter your GitHub Personal Access Token (PAT) to save data. Kept in memory only &mdash; never stored or logged.
         <div class="prow">
           <input type="password" id="pi" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
           <button class="bpat" onclick="savePAT('pi')">Save Token</button>
         </div>
-        <div class="tok" id="tok">✅ Token active for this session.</div>
+        <div class="tok" id="tok">&#10003; Token active for this session.</div>
       </div>
       <div class="scard">
         <div class="ftitle">New Remark</div>
-        <div class="fr"><label>Your Name *</label><select id="ss"><option value="">— Select your name —</option></select></div>
-        <div class="fr"><label>Resource *</label><select id="sr"><option value="">— Select a resource —</option></select></div>
+        <div class="fr"><label>Your Name *</label><select id="ss"><option value="">&mdash; Select your name &mdash;</option></select></div>
+        <div class="fr"><label>Resource *</label><select id="sr"><option value="">&mdash; Select a resource &mdash;</option></select></div>
         <div class="fr"><label>Rating *</label>
           <div class="sp" id="sp">
-            <button type="button" onclick="sr2(1)" onmouseover="sh2(1)" onmouseout="rh()">★</button>
-            <button type="button" onclick="sr2(2)" onmouseover="sh2(2)" onmouseout="rh()">★</button>
-            <button type="button" onclick="sr2(3)" onmouseover="sh2(3)" onmouseout="rh()">★</button>
-            <button type="button" onclick="sr2(4)" onmouseover="sh2(4)" onmouseout="rh()">★</button>
-            <button type="button" onclick="sr2(5)" onmouseover="sh2(5)" onmouseout="rh()">★</button>
+            <button type="button" onclick="sr2(1)" onmouseover="sh2(1)" onmouseout="rh()">&#9733;</button>
+            <button type="button" onclick="sr2(2)" onmouseover="sh2(2)" onmouseout="rh()">&#9733;</button>
+            <button type="button" onclick="sr2(3)" onmouseover="sh2(3)" onmouseout="rh()">&#9733;</button>
+            <button type="button" onclick="sr2(4)" onmouseover="sh2(4)" onmouseout="rh()">&#9733;</button>
+            <button type="button" onclick="sr2(5)" onmouseover="sh2(5)" onmouseout="rh()">&#9733;</button>
           </div>
         </div>
-        <div class="fr"><label>Comment *</label><textarea id="sc" placeholder="Describe your experience with this resource…"></textarea></div>
+        <div class="fr"><label>Comment *</label><textarea id="sc" placeholder="Describe your experience with this resource&hellip;"></textarea></div>
         <button class="bsub" id="bsub" onclick="doSubmit()">Submit Remark</button>
         <div class="fst" id="fst"></div>
       </div>
     </div>
 
-    <!-- SUBMIT NEW RESOURCE -->
     <div class="pane" id="p-newres">
       <p class="stitle">Submit an Online Reference</p>
-      <p class="sdesc">Add a new resource to the shared database. It will appear on the Search Dashboard immediately after saving.</p>
+      <p class="sdesc">Add a new resource to the shared database.</p>
       <div class="pbanner" id="pb2">
-        <strong>🔑 GitHub Token Required</strong>
-        Same token as the Submit a Remark tab — if you've already entered it there, it's already active here too.
+        <strong>&#128273; GitHub Token Required</strong>
+        Same token as Submit a Remark &mdash; if entered there, it is already active here.
         <div class="prow">
           <input type="password" id="pi2" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
           <button class="bpat" onclick="savePAT('pi2')">Save Token</button>
         </div>
-        <div class="tok" id="tok2">✅ Token active for this session.</div>
+        <div class="tok" id="tok2">&#10003; Token active for this session.</div>
       </div>
       <div class="scard">
         <div class="ftitle">New Online Reference</div>
         <div class="fr"><label>Resource Name *</label><input type="text" id="nr-name" placeholder="e.g. ProQuest Central"></div>
-        <div class="fr">
-          <label>URL *</label>
-          <input type="url" id="nr-url" placeholder="https://…">
-          <span class="hint">Must start with https://</span>
-        </div>
+        <div class="fr"><label>URL *</label><input type="url" id="nr-url" placeholder="https://&hellip;"><span class="hint">Must start with https://</span></div>
         <div class="fr">
           <label>Subject *</label>
           <div class="fr-row">
-            <div class="fr"><select id="nr-subj-sel" onchange="onSubjSel()"><option value="">— Pick existing —</option></select></div>
+            <div class="fr"><select id="nr-subj-sel" onchange="onSubjSel()"><option value="">&mdash; Pick existing &mdash;</option></select></div>
             <div style="align-self:center;font-size:.82rem;color:var(--m);flex-shrink:0">or</div>
-            <div class="fr"><input type="text" id="nr-subj-new" placeholder="Type a new subject…" oninput="onSubjNew()"></div>
+            <div class="fr"><input type="text" id="nr-subj-new" placeholder="Type a new subject&hellip;" oninput="onSubjNew()"></div>
           </div>
-          <span class="hint">Select existing OR type a new one. Separate multiple subjects with commas.</span>
+          <span class="hint">Select existing OR type a new one. Separate multiple with commas.</span>
         </div>
         <div class="fr">
           <label>Region *</label>
           <div class="fr-row">
-            <div class="fr"><select id="nr-reg-sel" onchange="onRegSel()"><option value="">— Pick existing —</option></select></div>
+            <div class="fr"><select id="nr-reg-sel" onchange="onRegSel()"><option value="">&mdash; Pick existing &mdash;</option></select></div>
             <div style="align-self:center;font-size:.82rem;color:var(--m);flex-shrink:0">or</div>
-            <div class="fr"><input type="text" id="nr-reg-new" placeholder="Type a new region…" oninput="onRegNew()"></div>
+            <div class="fr"><input type="text" id="nr-reg-new" placeholder="Type a new region&hellip;" oninput="onRegNew()"></div>
           </div>
         </div>
-        <div class="fr"><label>Description *</label><textarea id="nr-desc" placeholder="Brief description of what this resource offers…"></textarea></div>
-        <div class="fr"><label>Submitted by *</label><select id="nr-staff"><option value="">— Select your name —</option></select></div>
+        <div class="fr"><label>Description *</label><textarea id="nr-desc" placeholder="Brief description of what this resource offers&hellip;"></textarea></div>
+        <div class="fr"><label>Submitted by *</label><select id="nr-staff"><option value="">&mdash; Select your name &mdash;</option></select></div>
         <button class="bsub" id="nr-bsub" onclick="doNewResource()">Add to Database</button>
         <div class="fst" id="nr-fst"></div>
       </div>
     </div>
-
   </main>
 </div>
 
-<!-- RESOURCE MODAL -->
 <div class="ov" id="ov" onclick="clov(event)">
   <div class="modal">
-    <div class="mh"><h2 id="mn"></h2><button class="mx" onclick="clom()">×</button></div>
+    <div class="mh"><h2 id="mn"></h2><button class="mx" onclick="clom()">&#215;</button></div>
     <div class="mb">
       <div id="mm"></div><div id="mavg"></div>
       <div class="mdesc" id="md"></div>
@@ -380,61 +339,61 @@
 </div>
 
 <script>
-const CREDS    = {user:'nbkadultservices',pass:'ZV8bJiN6!p7DPMC3#QgX*MWJeEqO%LjNWc6g8Bcm'};
-const MOD_PASS = 'Nbk@Mod2025!';
-const MOD_NAMES= ["Phil", "Linnea", "Susan", "Lev", "Tracy"];
-const ALL_STAFF= ["Adrienne", "Amy", "Bill", "Bryan", "Caitlyn", "Carla", "Debbie", "Diane", "Harvey", "Jill", "Joe", "Lori", "Lucy", "Margo", "Mary Lynn", "Paula", "Volunteers", "Brenna", "SAMM", "Lev", "Linnea", "Phil", "Tracy", "Susan"];
-const ALL_SUBJ = ["Animals/Pets", "Art", "Civics/Elections", "Consumers", "Finance/Business", "Genealogy/Heritage", "General Research", "Geography", "Health/Medical", "History", "Housing", "Legal", "Music", "News", "Social Services", "Writing", "Youth"];
-const ALL_REG  = ["Local - Northbrook/shore", "City - Chicago", "State - IL", "National - USA", "Continental - USA/Canada/Mexico", "International"];
-const GU='linlun-bit',DR='online-reference-hub-data',DF='data.json',BR='main';
-const RAW='https://raw.githubusercontent.com/'+GU+'/'+DR+'/'+BR+'/'+DF;
-const API='https://api.github.com/repos/'+GU+'/'+DR+'/contents/'+DF;
 
-let D=null,rat=0,ghToken='',murl='',currentUser='',isMod=false,modalResourceName='';
-const SEED={"resources": [{"name": "American Ancestors®", "subject": "Genealogy/Heritage", "region": "National - USA", "description": "A National Center for Family History, Heritage & Culture", "url": "https://www.americanancestors.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Annenberg Classroom", "subject": "Civics/Elections, Youth", "region": "National - USA", "description": "Resources for Excellent Civics Education. Annenberg Classroom's free resources include over 65 videos on constitutional concepts and Supreme Court cases as well as games, lesson plans, timelines", "url": "https://www.annenbergclassroom.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Annual Reports", "subject": "Finance/Business", "region": "International", "description": "Annual reports for 10,379 international companies. Search 151,964 annual reports from 10,379 global companies help you make the right investment decision.", "url": "https://www.annualreports.com/", "avgRating": 0, "remarkCount": 0}, {"name": "Artstor | JSTOR", "subject": "History, Art", "region": "International", "description": "Explore Artstor’s collections of high-quality images, curated from leading museums and archives around the world.", "url": "https://www.jstor.org/site/artstor/", "avgRating": 0, "remarkCount": 0}, {"name": "Ballotpedia", "subject": "Civics/Elections", "region": "National - USA", "description": "Ballotpedia is the digital encyclopedia of American politics and elections. Our goal is to inform people about politics", "url": "https://ballotpedia.org/Main_Page", "avgRating": 0, "remarkCount": 0}, {"name": "BBB | Better Business Bureau", "subject": "Consumers, Finance/Business", "region": "Continental - USA/Canada/Mexico", "description": "BBB helps consumers and businesses in the United States and Canada. Find trusted BBB Accredited Businesses. Get BBB Accredited. File a complaint...", "url": "https://www.bbb.org/", "avgRating": 5.0, "remarkCount": 1}, {"name": "Citizens Utility Board", "subject": "Consumers", "region": "State - IL", "description": "Fight utility rate hikes, promote clean energy, and advocate for consumer protections in Illinois.", "url": "https://www.citizensutilityboard.org/", "avgRating": 0, "remarkCount": 0}, {"name": "City-Data.com", "subject": "Geography", "region": "City - Chicago", "description": "By collecting and analyzing data from a variety of government and private sources, we're able to create detailed, informative profiles for every city in the United States. From crime rates to weather patterns, you’ll find the data you're looking for on City-Data.com", "url": "http://city-data.com", "avgRating": 2.25, "remarkCount": 4}, {"name": "Classics For Kids", "subject": "Youth, Music", "region": "International", "description": "Classic music for children", "url": "https://www.classicsforkids.com/", "avgRating": 0, "remarkCount": 0}, {"name": "CNET Reviews", "subject": "Consumers", "region": "National - USA", "description": "When you’re considering whether to open your wallet, we have the in-depth analysis and buying advice to help you decide.", "url": "https://www.cnet.com/reviews/", "avgRating": 0, "remarkCount": 0}, {"name": "Cyndi's List", "subject": "Genealogy/Heritage", "region": "International", "description": "Cyndi's List of Genealogy Sites on the Internet", "url": "https://www.cyndislist.com/us/", "avgRating": 0, "remarkCount": 0}, {"name": "Data USA", "subject": "Geography", "region": "National - USA", "description": "The definitive place to explore US public data", "url": "https://datausa.io/", "avgRating": 4.0, "remarkCount": 1}, {"name": "Ellis Island Passenger Database", "subject": "Genealogy/Heritage", "region": "International", "description": "Ellis Island Passenger Search: Connect With Your Heritage. StatueofLiberty.org", "url": "https://www.statueofliberty.org/discover/passenger-ship-search/", "avgRating": 0, "remarkCount": 0}, {"name": "Encyclopedia of Chicago", "subject": "History", "region": "City - Chicago", "description": "Chicago History Museum, The Newberry Library, and Northwestern University", "url": "http://www.encyclopedia.chicagohistory.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Explore Chicago Collections", "subject": "History", "region": "City - Chicago", "description": "The place to discover the history and culture of Chicago.", "url": "https://explore.chicagocollections.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Illinois Digital Heritage Hub", "subject": "Genealogy/Heritage", "region": "State - IL", "description": "A Gateway to Illinois State History. The Illinois Digital Heritage Hub brings together unique digital cultural heritage resources from across Illinois.", "url": "https://idhh.dp.la/", "avgRating": 0, "remarkCount": 0}, {"name": "Illinois Digital Newspaper Collection (UIUC)", "subject": "General Research, News", "region": "State - IL", "description": "The Illinois Digital Newspaper Collections are free to search, free to browse, and free to download. There are five collections on this site.", "url": "https://idnc.library.illinois.edu/", "avgRating": 0, "remarkCount": 0}, {"name": "Illinois Legal Aid Online", "subject": "Legal", "region": "State - IL", "description": "Learn about Illinois law and take action with free legal forms, referrals and clear information on issues dealing with family, housing, debt, work", "url": "https://www.illinoislegalaid.org/", "avgRating": 0, "remarkCount": 0}, {"name": "JewishGen.org", "subject": "Genealogy/Heritage", "region": "International", "description": "Welcome to JewishGen - The Global Home for Jewish Genealogy. Explore millions of records from around the world, identify relatives, discover the towns of your ancestors, experience how they lived, connect with our global JewishGen community, and more.", "url": "http://jewishgen.org", "avgRating": 0, "remarkCount": 0}, {"name": "JSTOR", "subject": "General Research", "region": "International", "description": "Free online reading for over 10 million articles", "url": "https://www.jstor.org", "avgRating": 0, "remarkCount": 0}, {"name": "Martindale", "subject": "Legal", "region": "National - USA", "description": "Our directory contains listings for more than one millon lawyers and law firms.", "url": "https://www.martindale.com/find-attorneys/", "avgRating": 0, "remarkCount": 0}, {"name": "Merck Manual (all 3 editions)", "subject": "Health/Medical", "region": "International", "description": "Consumer version print editions: The Merck Manual 20th Edition medical reference, Veterinary Manual, Eleventh Edition, and The Merck Manual Go-To Home Guide For Symptoms", "url": "https://www.merckmanuals.com/home/resourcespages/books", "avgRating": 0, "remarkCount": 0}, {"name": "Nolo", "subject": "Legal", "region": "National - USA", "description": "Giving everyday people the tools to solve their legal issues since 1971", "url": "https://www.nolo.com/", "avgRating": 0, "remarkCount": 0}, {"name": "Northbrook Voices", "subject": "Genealogy/Heritage, History", "region": "Local - Northbrook/shore", "description": "Recording and preserving the stories of life in Northbrook. A project of the Northbrook History Museum and the Northbrook Public Library.", "url": "https://www.northbrookvoices.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Prescriber's Digital Reference", "subject": "Health/Medical", "region": "National - USA", "description": "Prescribers’ Digital Reference®\nPDR Drug Information. Fully searchable. Fully digital. Trusted by generations of healthcare providers, PDR.net supports prescribing decisions and patient adherence to improve health.", "url": "https://www.pdr.net/", "avgRating": 0, "remarkCount": 0}, {"name": "ProPublica Nonprofit Explorer", "subject": "Social Services, Finance/Business", "region": "National - USA", "description": "Browse millions of annual returns filed by tax-exempt organizations with ProPublica’s Nonprofit Explorer. See details like executive compensation, revenue, expenses and more. Search for an organization or a person, or search the full text of filings.", "url": "https://projects.propublica.org/nonprofits/", "avgRating": 0, "remarkCount": 0}, {"name": "Purdue OWL (Online Writing Lab)", "subject": "Writing", "region": "National - USA", "description": "The Online Writing Lab (the Purdue OWL) at Purdue University houses writing resources and instructional material, and we provide these as a free service at Purdue.", "url": "https://owl.purdue.edu/owl/", "avgRating": 0, "remarkCount": 0}, {"name": "Top Doctors", "subject": "Health/Medical", "region": "National - USA", "description": "", "url": "", "avgRating": 0, "remarkCount": 0}, {"name": "Yellow Pages Directory", "subject": "General Research", "region": "National - USA", "description": "", "url": "https://www.yellowpages.com/", "avgRating": 0, "remarkCount": 0}], "remarks": [{"staff": "Diane", "resource": "City-Data.com", "rating": 3, "ratingDisplay": "★★★", "comment": "lala testing", "timestamp": "2026-06-26T09:36:52"}, {"staff": "Linnea", "resource": "Data USA", "rating": 4, "ratingDisplay": "★★★★", "comment": "TESTING this is an okay thing", "timestamp": "2026-07-29T18:10:18"}, {"staff": "Debbie", "resource": "City-Data.com", "rating": 1, "ratingDisplay": "★", "comment": "This one's not so great imo", "timestamp": "2026-07-29T18:41:19"}, {"staff": "Adrienne", "resource": "BBB | Better Business Bureau", "rating": 5, "ratingDisplay": "★★★★★", "comment": "love this resource", "timestamp": "2026-07-29T19:06:51"}, {"staff": "Diane", "resource": "City-Data.com", "rating": 1, "ratingDisplay": "★", "comment": "didn't find this great", "timestamp": "2026-07-29T18:47:58"}, {"staff": "Caitlyn", "resource": "City-Data.com", "rating": 4, "ratingDisplay": "★★★★", "comment": "lalala", "timestamp": "2026-07-29T18:59:05"}], "categories": ["Animals/Pets", "Art", "Civics/Elections", "Consumers", "Finance/Business", "Genealogy/Heritage", "General Research", "Geography", "Health/Medical", "History", "Housing", "Legal", "Music", "News", "Social Services", "Writing", "Youth"], "regions": ["Local - Northbrook/shore", "City - Chicago", "State - IL", "National - USA", "Continental - USA/Canada/Mexico", "International"], "staff": ["Adrienne", "Amy", "Bill", "Bryan", "Caitlyn", "Carla", "Debbie", "Diane", "Harvey", "Jill", "Joe", "Lori", "Lucy", "Margo", "Mary Lynn", "Paula", "Volunteers", "Brenna", "SAMM", "Lev", "Linnea", "Phil", "Tracy", "Susan"]};
+var CREDS={user:'nbkadultservices',pass:'ZV8bJiN6!p7DPMC3#QgX*MWJeEqO%LjNWc6g8Bcm'};
+var MOD_PASS='Nbk@Mod2025!';
+var MOD_NAMES=["Phil", "Linnea", "Susan", "Lev", "Tracy"];
+var ALL_STAFF=["Adrienne", "Amy", "Bill", "Bryan", "Caitlyn", "Carla", "Debbie", "Diane", "Harvey", "Jill", "Joe", "Lori", "Lucy", "Margo", "Mary Lynn", "Paula", "Volunteers", "Brenna", "SAMM", "Lev", "Linnea", "Phil", "Tracy", "Susan"];
+var ALL_SUBJ=["Animals/Pets", "Art", "Civics/Elections", "Consumers", "Finance/Business", "Genealogy/Heritage", "General Research", "Geography", "Health/Medical", "History", "Housing", "Legal", "Music", "News", "Social Services", "Writing", "Youth"];
+var ALL_REG=["Local - Northbrook/shore", "City - Chicago", "State - IL", "National - USA", "Continental - USA/Canada/Mexico", "International"];
+var GU='linlun-bit',DR='online-reference-hub-data',DF='data.json',BR='main';
+var RAW='https://raw.githubusercontent.com/'+GU+'/'+DR+'/'+BR+'/'+DF;
+var API='https://api.github.com/repos/'+GU+'/'+DR+'/contents/'+DF;
+var D=null,rat=0,ghToken='',murl='',currentUser='',isMod=false,modalResourceName='';
+var SEED={"resources": [{"name": "American Ancestors®", "subject": "Genealogy/Heritage", "region": "National - USA", "description": "A National Center for Family History, Heritage & Culture", "url": "https://www.americanancestors.org/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Annenberg Classroom", "subject": "Civics/Elections, Youth", "region": "National - USA", "description": "Resources for Excellent Civics Education. Annenberg Classroom's free resources include over 65 videos on constitutional concepts and Supreme Court cases as well as games, lesson plans, timelines", "url": "https://www.annenbergclassroom.org/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Annual Reports", "subject": "Finance/Business", "region": "International", "description": "Annual reports for 10,379 international companies. Search 151,964 annual reports from 10,379 global companies help you make the right investment decision.", "url": "https://www.annualreports.com/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Artstor | JSTOR", "subject": "History, Art", "region": "International", "description": "Explore Artstor’s collections of high-quality images, curated from leading museums and archives around the world.", "url": "https://www.jstor.org/site/artstor/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Ballotpedia", "subject": "Civics/Elections", "region": "National - USA", "description": "Ballotpedia is the digital encyclopedia of American politics and elections. Our goal is to inform people about politics", "url": "https://ballotpedia.org/Main_Page", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "BBB | Better Business Bureau", "subject": "Consumers, Finance/Business", "region": "Continental - USA/Canada/Mexico", "description": "BBB helps consumers and businesses in the United States and Canada. Find trusted BBB Accredited Businesses. Get BBB Accredited. File a complaint...", "url": "https://www.bbb.org/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Citizens Utility Board", "subject": "Consumers", "region": "State - IL", "description": "Fight utility rate hikes, promote clean energy, and advocate for consumer protections in Illinois.", "url": "https://www.citizensutilityboard.org/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "City-Data.com", "subject": "Geography", "region": "City - Chicago", "description": "By collecting and analyzing data from a variety of government and private sources, we're able to create detailed, informative profiles for every city in the United States. From crime rates to weather patterns, you’ll find the data you're looking for on City-Data.com", "url": "http://city-data.com", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Classics For Kids", "subject": "Youth, Music", "region": "International", "description": "Classic music for children", "url": "https://www.classicsforkids.com/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "CNET Reviews", "subject": "Consumers", "region": "National - USA", "description": "When you’re considering whether to open your wallet, we have the in-depth analysis and buying advice to help you decide.", "url": "https://www.cnet.com/reviews/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Cyndi's List", "subject": "Genealogy/Heritage", "region": "International", "description": "Cyndi's List of Genealogy Sites on the Internet", "url": "https://www.cyndislist.com/us/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Data USA", "subject": "Geography", "region": "National - USA", "description": "The definitive place to explore US public data", "url": "https://datausa.io/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Ellis Island Passenger Database", "subject": "Genealogy/Heritage", "region": "International", "description": "Ellis Island Passenger Search: Connect With Your Heritage. StatueofLiberty.org", "url": "https://www.statueofliberty.org/discover/passenger-ship-search/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Encyclopedia of Chicago", "subject": "History", "region": "City - Chicago", "description": "Chicago History Museum, The Newberry Library, and Northwestern University", "url": "http://www.encyclopedia.chicagohistory.org/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Explore Chicago Collections", "subject": "History", "region": "City - Chicago", "description": "The place to discover the history and culture of Chicago.", "url": "https://explore.chicagocollections.org/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Illinois Digital Heritage Hub", "subject": "Genealogy/Heritage", "region": "State - IL", "description": "A Gateway to Illinois State History. The Illinois Digital Heritage Hub brings together unique digital cultural heritage resources from across Illinois.", "url": "https://idhh.dp.la/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Illinois Digital Newspaper Collection (UIUC)", "subject": "General Research, News", "region": "State - IL", "description": "The Illinois Digital Newspaper Collections are free to search, free to browse, and free to download. There are five collections on this site.", "url": "https://idnc.library.illinois.edu/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Illinois Legal Aid Online", "subject": "Legal", "region": "State - IL", "description": "Learn about Illinois law and take action with free legal forms, referrals and clear information on issues dealing with family, housing, debt, work", "url": "https://www.illinoislegalaid.org/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "JewishGen.org", "subject": "Genealogy/Heritage", "region": "International", "description": "Welcome to JewishGen - The Global Home for Jewish Genealogy. Explore millions of records from around the world, identify relatives, discover the towns of your ancestors, experience how they lived, connect with our global JewishGen community, and more.", "url": "http://jewishgen.org", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "JSTOR", "subject": "General Research", "region": "International", "description": "Free online reading for over 10 million articles", "url": "https://www.jstor.org", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Martindale", "subject": "Legal", "region": "National - USA", "description": "Our directory contains listings for more than one millon lawyers and law firms.", "url": "https://www.martindale.com/find-attorneys/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Merck Manual (all 3 editions)", "subject": "Health/Medical", "region": "International", "description": "Consumer version print editions: The Merck Manual 20th Edition medical reference, Veterinary Manual, Eleventh Edition, and The Merck Manual Go-To Home Guide For Symptoms", "url": "https://www.merckmanuals.com/home/resourcespages/books", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Nolo", "subject": "Legal", "region": "National - USA", "description": "Giving everyday people the tools to solve their legal issues since 1971", "url": "https://www.nolo.com/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Northbrook Voices", "subject": "Genealogy/Heritage, History", "region": "Local - Northbrook/shore", "description": "Recording and preserving the stories of life in Northbrook. A project of the Northbrook History Museum and the Northbrook Public Library.", "url": "https://www.northbrookvoices.org/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Prescriber's Digital Reference", "subject": "Health/Medical", "region": "National - USA", "description": "Prescribers’ Digital Reference®\nPDR Drug Information. Fully searchable. Fully digital. Trusted by generations of healthcare providers, PDR.net supports prescribing decisions and patient adherence to improve health.", "url": "https://www.pdr.net/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "ProPublica Nonprofit Explorer", "subject": "Social Services, Finance/Business", "region": "National - USA", "description": "Browse millions of annual returns filed by tax-exempt organizations with ProPublica’s Nonprofit Explorer. See details like executive compensation, revenue, expenses and more. Search for an organization or a person, or search the full text of filings.", "url": "https://projects.propublica.org/nonprofits/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Purdue OWL (Online Writing Lab)", "subject": "Writing", "region": "National - USA", "description": "The Online Writing Lab (the Purdue OWL) at Purdue University houses writing resources and instructional material, and we provide these as a free service at Purdue.", "url": "https://owl.purdue.edu/owl/", "avgRating": 0, "remarkCount": 0, "hidden": false}, {"name": "Yellow Pages Directory", "subject": "General Research", "region": "National - USA", "description": "", "url": "https://www.yellowpages.com/", "avgRating": 0, "remarkCount": 0, "hidden": false}], "remarks": [], "regions": ["Local - Northbrook/shore", "City - Chicago", "State - IL", "National - USA", "Continental - USA/Canada/Mexico", "International"]};
 
 function es(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function fd(ts){if(!ts)return'';try{const d=new Date(ts);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});}catch(e){return ts;}}
-function navURL(url){const a=document.createElement('a');a.href=url;a.rel='noopener noreferrer';a.target='_blank';a.style.display='none';document.body.appendChild(a);a.click();document.body.removeChild(a);}
+function fd(ts){if(!ts)return'';try{var d=new Date(ts);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});}catch(e){return ts;}}
+function navURL(url){var a=document.createElement('a');a.href=url;a.rel='noopener noreferrer';a.target='_blank';a.style.display='none';document.body.appendChild(a);a.click();document.body.removeChild(a);}
 function st(avg,cnt){
   if(!avg)return'<span style="color:#aaa;font-size:.78rem">No ratings yet</span>';
-  const f=Math.round(avg);let h='<span class="stars">';
-  for(let i=1;i<=5;i++)h+=i<=f?'★':'<span class="e">★</span>';
+  var f=Math.round(avg),h='<span class="stars">';
+  for(var i=1;i<=5;i++)h+=i<=f?'&#9733;':'<span class="e">&#9733;</span>';
   h+='</span>';
   if(cnt!==undefined)h+=' <span style="font-size:.76rem;color:var(--m)">('+avg.toFixed(1)+', '+cnt+' remark'+(cnt!==1?'s':'')+')</span>';
   return h;
 }
-function ao(id,v){const e=document.getElementById(id);if(!e)return;const o=document.createElement('option');o.value=v;o.textContent=v;e.appendChild(o);}
+function ao(id,v){var e=document.getElementById(id);if(!e)return;var o=document.createElement('option');o.value=v;o.textContent=v;e.appendChild(o);}
 
 function doLogin(e){
   e.preventDefault();
-  if(document.getElementById('l-user').value===CREDS.user&&document.getElementById('l-pass').value===CREDS.pass){
+  var u=document.getElementById('l-user').value,p=document.getElementById('l-pass').value;
+  if(u===CREDS.user&&p===CREDS.pass){
     document.getElementById('s-login').classList.add('off');
     document.getElementById('s-who').classList.remove('off');
     document.getElementById('who-sel').focus();
   }else{
-    const err=document.getElementById('login-err'),box=document.querySelector('#s-login .box');
+    var err=document.getElementById('login-err'),box=document.querySelector('#s-login .box');
     err.classList.add('show');box.classList.remove('shake');void box.offsetWidth;box.classList.add('shake');
     document.getElementById('l-pass').value='';document.getElementById('l-pass').focus();
   }
 }
 
 function onWhoChange(){
-  const v=document.getElementById('who-sel').value;
-  const isMaybe=MOD_NAMES.includes(v);
-  document.getElementById('mod-field').style.display=isMaybe?'flex':'none';
-  document.getElementById('mod-hint').style.display=isMaybe?'block':'none';
+  var v=document.getElementById('who-sel').value,im=MOD_NAMES.indexOf(v)>=0;
+  document.getElementById('mod-field').style.display=im?'flex':'none';
+  document.getElementById('mod-hint').style.display=im?'block':'none';
   document.getElementById('who-err').classList.remove('show');
 }
 
 function doWho(){
-  const name=document.getElementById('who-sel').value;
+  var name=document.getElementById('who-sel').value;
   if(!name){document.getElementById('who-err').classList.add('show');return;}
   document.getElementById('who-err').classList.remove('show');
-  isMod=MOD_NAMES.includes(name)&&document.getElementById('mod-pass').value===MOD_PASS;
+  isMod=MOD_NAMES.indexOf(name)>=0&&document.getElementById('mod-pass').value===MOD_PASS;
   currentUser=name;
-  const pill=isMod?' <span class="mod-pill">🛡️ MOD</span>':'';
-  document.getElementById('hdr-user').innerHTML='👤 '+es(name)+pill;
+  var pill=isMod?' <span class="mod-pill">&#128737;&#65039; MOD</span>':'';
+  document.getElementById('hdr-user').innerHTML='&#128100; '+es(name)+pill;
   if(isMod)document.getElementById('mod-res-bar').style.display='flex';
   document.getElementById('s-who').classList.add('off');
   document.getElementById('app').style.display='block';
@@ -445,244 +404,196 @@ function doLogout(){
   document.getElementById('app').style.display='none';
   document.getElementById('s-who').classList.add('off');
   document.getElementById('s-login').classList.remove('off');
-  ['l-user','l-pass','mod-pass'].forEach(id=>document.getElementById(id).value='');
+  ['l-user','l-pass','mod-pass'].forEach(function(id){document.getElementById(id).value='';});
   document.getElementById('login-err').classList.remove('show');
   document.getElementById('mod-field').style.display='none';
   document.getElementById('mod-hint').style.display='none';
   document.getElementById('mod-res-bar').style.display='none';
   ghToken='';currentUser='';isMod=false;D=null;
-  ['fs','fr2','fm','rfs','rfr','ss','sr','nr-subj-sel','nr-reg-sel','nr-staff'].forEach(id=>{
-    const el=document.getElementById(id);if(!el)return;while(el.options.length>1)el.remove(1);el.selectedIndex=0;
+  ['fs','fr2','fm','rfs','rfr','ss','sr','nr-subj-sel','nr-reg-sel','nr-staff'].forEach(function(id){
+    var el=document.getElementById(id);if(!el)return;while(el.options.length>1)el.remove(1);el.selectedIndex=0;
   });
   document.getElementById('l-user').focus();
 }
 
-async function initApp(){
+function initApp(){
   if(D)return;
-  D=await load();calc(D);pop();rg();rr();
+  load().then(function(data){D=data;calc(D);pop();rg();rr();});
 }
 
-async function load(){
-  try{const r=await fetch(RAW+'?t='+Date.now());if(r.ok)return await r.json();}catch(e){}
-  return JSON.parse(JSON.stringify(SEED));
+function load(){
+  return fetch(RAW+'?t='+Date.now()).then(function(r){if(r.ok)return r.json();throw new Error();}).catch(function(){return JSON.parse(JSON.stringify(SEED));});
 }
 
 function calc(d){
-  d.resources.forEach(r=>{
-    const m=d.remarks.filter(x=>x.resource===r.name&&!x.hidden);
-    r._avg=m.length?m.reduce((s,x)=>s+x.rating,0)/m.length:0;
-    r._cnt=m.length;
+  d.resources.forEach(function(r){
+    var m=d.remarks.filter(function(x){return x.resource===r.name&&!x.hidden;});
+    r._avg=m.length?m.reduce(function(s,x){return s+x.rating;},0)/m.length:0;r._cnt=m.length;
   });
 }
 
 function pop(){
-  const existSubj=new Set(Array.from(document.getElementById('fs').options).map(o=>o.value).filter(Boolean));
-  ALL_SUBJ.forEach(s=>{if(!existSubj.has(s)){ao('fs',s);ao('nr-subj-sel',s);}});
-  D.resources.forEach(r=>r.subject.split(',').forEach(s=>{
-    const t=s.trim();
-    if(t&&!Array.from(document.getElementById('fs').options).find(o=>o.value===t)){ao('fs',t);ao('nr-subj-sel',t);}
-  }));
-  const existReg=new Set(Array.from(document.getElementById('fr2').options).map(o=>o.value).filter(Boolean));
-  ALL_REG.forEach(r=>{if(!existReg.has(r)){ao('fr2',r);ao('nr-reg-sel',r);}});
-  D.regions.forEach(r=>{if(!Array.from(document.getElementById('fr2').options).find(o=>o.value===r)){ao('fr2',r);ao('nr-reg-sel',r);}});
-  ALL_STAFF.forEach(s=>{ao('ss',s);ao('rfs',s);ao('nr-staff',s);});
-  ['ss','nr-staff'].forEach(id=>{
-    const el=document.getElementById(id);if(!el)return;
-    for(let i=0;i<el.options.length;i++){if(el.options[i].value===currentUser){el.selectedIndex=i;break;}}
-  });
-  D.resources.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(r=>{ao('sr',r.name);ao('rfr',r.name);});
+  var existSubj=Array.from(document.getElementById('fs').options).map(function(o){return o.value;}).filter(Boolean);
+  ALL_SUBJ.forEach(function(s){if(existSubj.indexOf(s)<0){ao('fs',s);ao('nr-subj-sel',s);}});
+  D.resources.forEach(function(r){r.subject.split(',').forEach(function(s){var t=s.trim();if(t&&!Array.from(document.getElementById('fs').options).find(function(o){return o.value===t;})){ao('fs',t);ao('nr-subj-sel',t);}});});
+  var existReg=Array.from(document.getElementById('fr2').options).map(function(o){return o.value;}).filter(Boolean);
+  ALL_REG.forEach(function(r){if(existReg.indexOf(r)<0){ao('fr2',r);ao('nr-reg-sel',r);}});
+  D.regions.forEach(function(r){if(!Array.from(document.getElementById('fr2').options).find(function(o){return o.value===r;})){ao('fr2',r);ao('nr-reg-sel',r);}});
+  ALL_STAFF.forEach(function(s){ao('ss',s);ao('rfs',s);ao('nr-staff',s);});
+  ['ss','nr-staff'].forEach(function(id){var el=document.getElementById(id);if(!el)return;for(var i=0;i<el.options.length;i++){if(el.options[i].value===currentUser){el.selectedIndex=i;break;}}});
+  D.resources.slice().sort(function(a,b){return a.name.localeCompare(b.name);}).forEach(function(r){ao('sr',r.name);ao('rfr',r.name);});
 }
 
 function rg(list){
-  const showHiddenRes=isMod&&document.getElementById('show-hidden-res')?.checked;
-  list=(list||D.resources).filter(r=>showHiddenRes?true:!r.hidden);
-  document.getElementById('fcnt').textContent=list.length+' of '+D.resources.filter(r=>!r.hidden).length+' resources';
+  var shr=isMod&&document.getElementById('show-hidden-res')&&document.getElementById('show-hidden-res').checked;
+  list=(list||D.resources).filter(function(r){return shr?true:!r.hidden;});
+  document.getElementById('fcnt').textContent=list.length+' of '+D.resources.filter(function(r){return !r.hidden;}).length+' resources';
   document.getElementById('nores').style.display=list.length?'none':'block';
-  document.getElementById('grid').innerHTML=list.map(r=>{
-    const tags=r.subject.split(',').map(s=>'<span class="tag ts">'+es(s.trim())+'</span>').join('');
-    const reg=r.region?'<span class="tag tr2">'+es(r.region)+'</span>':'';
-    const ne=r.name.replace(/\/g,'\\').replace(/'/g,"\'");
-    const hiddenBadge=r.hidden?'<span class="hidden-badge-res">hidden</span>':'';
-    let modActs='';
-    if(isMod){
-      const hidBtn=r.hidden
-        ?'<button class="btn-card-mod restore" onclick="toggleResHide(''+ne+'',event)">↩ Restore</button>'
-        :'<button class="btn-card-mod" onclick="toggleResHide(''+ne+'',event)">🚫 Hide</button>';
-      modActs='<div class="card-mod-actions show">'+hidBtn+'</div>';
-    }
+  document.getElementById('grid').innerHTML=list.map(function(r){
+    var tags=r.subject.split(',').map(function(s){return '<span class="tag ts">'+es(s.trim())+'</span>';}).join('');
+    var reg=r.region?'<span class="tag tr2">'+es(r.region)+'</span>':'';
+    var ne=r.name.replace(/\/g,'\\').replace(/'/g,"\'");
+    var hb=r.hidden?'<span class="hidden-badge-res">hidden</span>':'';
+    var ma='';
+    if(isMod){var hb2=r.hidden?'<button class="btn-card-mod restore" onclick="toggleResHide(''+ne+'',event)">&#8629; Restore</button>':'<button class="btn-card-mod" onclick="toggleResHide(''+ne+'',event)">&#128683; Hide</button>';ma='<div class="card-mod-actions show">'+hb2+'</div>';}
     return '<div class="card'+(r.hidden?' hidden-resource':'')+'" onclick="om(''+ne+'')">'
-      +modActs
-      +'<div class="ctop"><div class="cname">'+es(r.name)+hiddenBadge+'</div><div>'+st(r._avg)+'</div></div>'
-      +'<div class="tags">'+tags+reg+'</div>'
-      +'<div class="cdesc">'+es(r.description)+'</div>'
+      +ma+'<div class="ctop"><div class="cname">'+es(r.name)+hb+'</div><div>'+st(r._avg)+'</div></div>'
+      +'<div class="tags">'+tags+reg+'</div><div class="cdesc">'+es(r.description)+'</div>'
       +'<div style="display:flex;justify-content:space-between;margin-top:.2rem">'
-      +'<span class="clink" onclick="event.stopPropagation();navURL(''+es(r.url)+'')">↗ Visit resource</span>'
-      +'<span class="cnt">'+(r._cnt?r._cnt+' remark'+(r._cnt!==1?'s':''):'')+'</span>'
-      +'</div></div>';
+      +'<span class="clink" onclick="event.stopPropagation();navURL(''+es(r.url)+'')">&#8599; Visit resource</span>'
+      +'<span class="cnt">'+(r._cnt?r._cnt+' remark'+(r._cnt!==1?'s':''):'')+'</span></div></div>';
   }).join('');
 }
 
 function af(){
-  const kw=document.getElementById('fk').value.toLowerCase();
-  const sub=document.getElementById('fs').value;
-  const reg=document.getElementById('fr2').value;
-  const min=parseFloat(document.getElementById('fm').value)||0;
-  const showHiddenRes=isMod&&document.getElementById('show-hidden-res')?.checked;
-  rg(D.resources.filter(r=>{
-    if(!showHiddenRes&&r.hidden)return false;
-    if(kw&&!r.name.toLowerCase().includes(kw)&&!r.description.toLowerCase().includes(kw))return false;
-    if(sub&&!r.subject.split(',').map(s=>s.trim()).includes(sub))return false;
+  var kw=document.getElementById('fk').value.toLowerCase(),sub=document.getElementById('fs').value,reg=document.getElementById('fr2').value,min=parseFloat(document.getElementById('fm').value)||0;
+  var shr=isMod&&document.getElementById('show-hidden-res')&&document.getElementById('show-hidden-res').checked;
+  rg(D.resources.filter(function(r){
+    if(!shr&&r.hidden)return false;
+    if(kw&&r.name.toLowerCase().indexOf(kw)<0&&r.description.toLowerCase().indexOf(kw)<0)return false;
+    if(sub&&r.subject.split(',').map(function(s){return s.trim();}).indexOf(sub)<0)return false;
     if(reg&&r.region!==reg)return false;
     if(min&&r._avg<min)return false;
     return true;
   }));
 }
-function cf(){['fk','fs','fr2','fm'].forEach(id=>{const e=document.getElementById(id);e.tagName==='INPUT'?e.value='':e.selectedIndex=0;});af();}
+function cf(){['fk','fs','fr2','fm'].forEach(function(id){var e=document.getElementById(id);e.tagName==='INPUT'?e.value='':e.selectedIndex=0;});af();}
 
-async function toggleResHide(name,event){
-  if(event)event.stopPropagation();
-  if(!isMod)return;
+function toggleResHide(name,event){
+  if(event)event.stopPropagation();if(!isMod)return;
   if(!ghToken){alert('Please enter your GitHub token in the Submit a Remark tab first.');return;}
-  const res=D.resources.find(r=>r.name===name);if(!res)return;
-  const willHide=!res.hidden;
-  if(!confirm((willHide?'Hide':'Restore')+' the resource "'+name+'" for all staff?'))return;
-  res.hidden=willHide;rg();
-  try{
-    const g=await fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}});
-    if(!g.ok)throw new Error('API error '+g.status);
-    const fd2=await g.json(),sha=fd2.sha;
-    const cur=JSON.parse(atob(fd2.content.replace(/\n/g,'')));
-    const m=cur.resources.find(r=>r.name===name);if(m)m.hidden=willHide;
-    const enc=btoa(unescape(encodeURIComponent(JSON.stringify(cur,null,2))));
-    const p=await fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:(willHide?'Hide':'Restore')+' resource: "'+name+'"',content:enc,sha})});
-    if(!p.ok)throw new Error('Write failed');
-  }catch(e){res.hidden=!willHide;rg();alert('Could not save: '+e.message);}
+  var res=D.resources.find(function(r){return r.name===name;});if(!res)return;
+  var wh=!res.hidden;if(!confirm((wh?'Hide':'Restore')+' the resource "'+name+'" for all staff?'))return;
+  res.hidden=wh;rg();
+  fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}}).then(function(g){
+    if(!g.ok)throw new Error('API error '+g.status);return g.json();
+  }).then(function(fd2){
+    var sha=fd2.sha,cur=JSON.parse(atob(fd2.content.replace(/
+/g,'')));
+    var m=cur.resources.find(function(r){return r.name===name;});if(m)m.hidden=wh;
+    var enc=btoa(unescape(encodeURIComponent(JSON.stringify(cur,null,2))));
+    return fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:(wh?'Hide':'Restore')+' resource: "'+name+'"',content:enc,sha:sha})});
+  }).then(function(p){if(!p.ok)throw new Error('Write failed');}).catch(function(e){res.hidden=!wh;rg();alert('Could not save: '+e.message);});
 }
 
 function arf(){
-  const s=document.getElementById('rfs').value,r=document.getElementById('rfr').value;
-  const showHidden=document.getElementById('show-hidden').checked;
-  rr(D.remarks.filter(x=>{
-    if(s&&x.staff!==s)return false;
-    if(r&&x.resource!==r)return false;
-    if(x.hidden){
-      if(!showHidden)return false;
-      if(!isMod&&x.staff!==currentUser)return false;
-    }
+  var s=document.getElementById('rfs').value,r=document.getElementById('rfr').value,sh=document.getElementById('show-hidden').checked;
+  rr(D.remarks.filter(function(x){
+    if(s&&x.staff!==s)return false;if(r&&x.resource!==r)return false;
+    if(x.hidden){if(!sh)return false;if(!isMod&&x.staff!==currentUser)return false;}
     return true;
   }));
 }
 
 function rr(list){
-  list=(list||D.remarks.filter(x=>!x.hidden)).slice().sort((a,b)=>b.timestamp.localeCompare(a.timestamp));
+  list=(list||D.remarks.filter(function(x){return !x.hidden;})).slice().sort(function(a,b){return b.timestamp.localeCompare(a.timestamp);});
   document.getElementById('rcnt').textContent=list.length+' remark'+(list.length!==1?'s':'');
   document.getElementById('rno').style.display=list.length?'none':'block';
-  document.getElementById('rtb').innerHTML=list.map(x=>{
-    const canAct=x.staff===currentUser||isMod;
-    const isHidden=!!x.hidden;
-    const idx=D.remarks.indexOf(x);
-    let btn='';
-    if(canAct)btn=isHidden?'<button class="tbl-hide unhide" onclick="toggleHide('+idx+',event)">↩ Restore</button>':'<button class="tbl-hide" onclick="toggleHide('+idx+',event)">🚫 Hide</button>';
-    const hb=isHidden?' <span class="hidden-badge">(hidden)</span>':'';
-    return '<tr class="'+(isHidden?'row-hidden':'')+'">'
-      +'<td style="white-space:nowrap;font-size:.78rem">'+fd(x.timestamp)+'</td>'
-      +'<td>'+es(x.staff)+hb+'</td><td>'+es(x.resource)+'</td>'
-      +'<td><span class="stars">'+'★'.repeat(x.rating)+'<span class="e">'+'★'.repeat(5-x.rating)+'</span></span></td>'
-      +'<td>'+es(x.comment)+'</td><td>'+btn+'</td></tr>';
+  document.getElementById('rtb').innerHTML=list.map(function(x){
+    var canAct=x.staff===currentUser||isMod,ih=!!x.hidden,idx=D.remarks.indexOf(x);
+    var btn='';if(canAct)btn=ih?'<button class="tbl-hide" onclick="toggleHide('+idx+',event)">&#8629; Restore</button>':'<button class="tbl-hide" onclick="toggleHide('+idx+',event)">&#128683; Hide</button>';
+    var hb=ih?' <span class="hidden-badge">(hidden)</span>':'';
+    var stars='';for(var i=1;i<=5;i++)stars+=i<=x.rating?'&#9733;':'<span class="e">&#9733;</span>';
+    return '<tr class="'+(ih?'row-hidden':'')+'"><td style="white-space:nowrap;font-size:.78rem">'+fd(x.timestamp)+'</td><td>'+es(x.staff)+hb+'</td><td>'+es(x.resource)+'</td><td><span class="stars">'+stars+'</span></td><td>'+es(x.comment)+'</td><td>'+btn+'</td></tr>';
   }).join('');
 }
 function crf(){document.getElementById('rfs').selectedIndex=0;document.getElementById('rfr').selectedIndex=0;arf();}
 
 function om(name){
-  const r=D.resources.find(x=>x.name===name);if(!r)return;
-  modalResourceName=name;
-  document.getElementById('mn').textContent=r.name;
-  const tags=r.subject.split(',').map(s=>'<span class="tag ts">'+es(s.trim())+'</span>').join(' ');
-  const reg=r.region?'<span class="tag tr2">'+es(r.region)+'</span>':'';
+  var r=D.resources.find(function(x){return x.name===name;});if(!r)return;
+  modalResourceName=name;document.getElementById('mn').textContent=r.name;
+  var tags=r.subject.split(',').map(function(s){return '<span class="tag ts">'+es(s.trim())+'</span>';}).join(' ');
+  var reg=r.region?'<span class="tag tr2">'+es(r.region)+'</span>':'';
   document.getElementById('mm').innerHTML=tags+reg;
-  document.getElementById('mavg').innerHTML=r._avg?st(r._avg,r._cnt):'<span style="color:var(--m);font-size:.85rem">No ratings yet — be the first!</span>';
-  document.getElementById('md').textContent=r.description;
-  murl=r.url;document.getElementById('mu').textContent='↗ '+r.url;
-  renderModalRemarks();
-  document.getElementById('ov').classList.add('on');
+  document.getElementById('mavg').innerHTML=r._avg?st(r._avg,r._cnt):'<span style="color:var(--m);font-size:.85rem">No ratings yet &mdash; be the first!</span>';
+  document.getElementById('md').textContent=r.description;murl=r.url;document.getElementById('mu').textContent='&#8599; '+r.url;
+  renderModalRemarks();document.getElementById('ov').classList.add('on');
 }
-
 function renderModalRemarks(){
-  const rems=D.remarks.filter(x=>x.resource===modalResourceName&&!x.hidden).sort((a,b)=>b.timestamp.localeCompare(a.timestamp));
-  const mrEl=document.getElementById('mr');
+  var rems=D.remarks.filter(function(x){return x.resource===modalResourceName&&!x.hidden;}).sort(function(a,b){return b.timestamp.localeCompare(a.timestamp);});
+  var mrEl=document.getElementById('mr');
   if(!rems.length){mrEl.innerHTML='<div style="font-size:.85rem;color:var(--m);font-style:italic">No remarks yet.</div>';return;}
-  mrEl.innerHTML=rems.map(x=>{
-    const idx=D.remarks.indexOf(x);
-    const canAct=x.staff===currentUser||isMod;
-    const hideBtn=canAct?'<button class="btn-hide" onclick="toggleHide('+idx+',event,true)">🚫 Hide</button>':'';
-    return '<div class="ri"><div class="rit"><div><span class="ris">'+es(x.staff)+'</span> <span class="rits">'+fd(x.timestamp)+'</span></div>'
-      +'<div class="ri-actions">'+hideBtn+'</div></div>'
-      +'<span class="stars">'+'★'.repeat(x.rating)+'<span class="e">'+'★'.repeat(5-x.rating)+'</span></span>'
-      +'<div style="margin-top:.2rem">'+es(x.comment)+'</div></div>';
+  mrEl.innerHTML=rems.map(function(x){
+    var idx=D.remarks.indexOf(x),canAct=x.staff===currentUser||isMod;
+    var hb=canAct?'<button class="btn-hide" onclick="toggleHide('+idx+',event,true)">&#128683; Hide</button>':'';
+    var stars='';for(var i=1;i<=5;i++)stars+=i<=x.rating?'&#9733;':'<span class="e">&#9733;</span>';
+    return '<div class="ri"><div class="rit"><div><span class="ris">'+es(x.staff)+'</span> <span class="rits">'+fd(x.timestamp)+'</span></div><div class="ri-actions">'+hb+'</div></div><span class="stars">'+stars+'</span><div style="margin-top:.2rem">'+es(x.comment)+'</div></div>';
   }).join('');
 }
-
 function clov(e){if(e.target===document.getElementById('ov'))clom();}
 function clom(){document.getElementById('ov').classList.remove('on');}
 function goURL(){if(murl)navURL(murl);}
 
-async function toggleHide(idx,event,fromModal){
+function toggleHide(idx,event,fromModal){
   if(event)event.stopPropagation();
   if(!ghToken){alert('Please enter your GitHub token in the Submit a Remark tab first.');return;}
-  const remark=D.remarks[idx];if(!remark)return;
+  var remark=D.remarks[idx];if(!remark)return;
   if(remark.staff!==currentUser&&!isMod)return;
-  const willHide=!remark.hidden;
-  if(!confirm((willHide?'Hide':'Restore')+' remark by '+remark.staff+' on "'+remark.resource+'"?'))return;
-  remark.hidden=willHide;calc(D);rg();arf();if(fromModal)renderModalRemarks();
-  try{
-    const g=await fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}});
-    if(!g.ok)throw new Error('API error '+g.status);
-    const fd2=await g.json(),sha=fd2.sha;
-    const cur=JSON.parse(atob(fd2.content.replace(/\n/g,'')));
-    const m=cur.remarks.find(x=>x.staff===remark.staff&&x.resource===remark.resource&&x.timestamp===remark.timestamp);
-    if(m)m.hidden=willHide;
-    const enc=btoa(unescape(encodeURIComponent(JSON.stringify(cur,null,2))));
-    const p=await fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:(willHide?'Hide':'Restore')+' remark: '+remark.staff+' on "'+remark.resource+'"',content:enc,sha})});
-    if(!p.ok)throw new Error('Write failed');
-  }catch(e){remark.hidden=!willHide;calc(D);rg();arf();if(fromModal)renderModalRemarks();alert('Could not save: '+e.message);}
+  var wh=!remark.hidden;if(!confirm((wh?'Hide':'Restore')+' remark by '+remark.staff+' on "'+remark.resource+'"?'))return;
+  remark.hidden=wh;calc(D);rg();arf();if(fromModal)renderModalRemarks();
+  fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}}).then(function(g){
+    if(!g.ok)throw new Error('API error '+g.status);return g.json();
+  }).then(function(fd2){
+    var sha=fd2.sha,cur=JSON.parse(atob(fd2.content.replace(/
+/g,'')));
+    var m=cur.remarks.find(function(x){return x.staff===remark.staff&&x.resource===remark.resource&&x.timestamp===remark.timestamp;});if(m)m.hidden=wh;
+    var enc=btoa(unescape(encodeURIComponent(JSON.stringify(cur,null,2))));
+    return fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:(wh?'Hide':'Restore')+' remark: '+remark.staff+' on "'+remark.resource+'"',content:enc,sha:sha})});
+  }).then(function(p){if(!p.ok)throw new Error('Write failed');}).catch(function(e){remark.hidden=!wh;calc(D);rg();arf();if(fromModal)renderModalRemarks();alert('Could not save: '+e.message);});
 }
 
-function sr2(v){rat=v;us(v);}
-function sh2(v){us(v,true);}
-function rh(){us(rat);}
-function us(v){document.querySelectorAll('#sp button').forEach((b,i)=>b.classList.toggle('lit',i<v));}
+function sr2(v){rat=v;us(v);}function sh2(v){us(v,true);}function rh(){us(rat);}
+function us(v){document.querySelectorAll('#sp button').forEach(function(b,i){b.classList.toggle('lit',i<v);});}
 
 function savePAT(inputId){
-  const v=document.getElementById(inputId).value.trim();if(!v)return;
+  var v=document.getElementById(inputId).value.trim();if(!v)return;
   ghToken=v;document.getElementById(inputId).value='';
-  ['pb','pb2'].forEach(id=>{const pb=document.getElementById(id);pb.style.background='#d4edda';pb.style.borderColor='#b8dfc4';pb.style.color='#155724';});
-  document.getElementById('tok').style.display='block';
-  document.getElementById('tok2').style.display='block';
+  ['pb','pb2'].forEach(function(id){var pb=document.getElementById(id);pb.style.background='#d4edda';pb.style.borderColor='#b8dfc4';pb.style.color='#155724';});
+  document.getElementById('tok').style.display='block';document.getElementById('tok2').style.display='block';
 }
 
-async function doSubmit(){
-  const staff=document.getElementById('ss').value,res=document.getElementById('sr').value,comment=document.getElementById('sc').value.trim();
+function doSubmit(){
+  var staff=document.getElementById('ss').value,res=document.getElementById('sr').value,comment=document.getElementById('sc').value.trim();
   if(!staff||!res||!rat||!comment){ss2('fst','Please fill in all fields and select a rating.','err');return;}
   if(!ghToken){ss2('fst','Please enter your GitHub token above.','err');return;}
   document.getElementById('bsub').disabled=true;ss2('fst','Saving to GitHub…','load');
-  try{
-    const g=await fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}});
-    if(!g.ok)throw new Error('GitHub API error '+g.status+' — check your token.');
-    const fd2=await g.json(),sha=fd2.sha;
-    const cur=JSON.parse(atob(fd2.content.replace(/\n/g,'')));
-    const ts=new Date().toISOString().slice(0,19);
-    const nr={staff,resource:res,rating:rat,ratingDisplay:'★'.repeat(rat),comment,timestamp:ts,hidden:false};
+  fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}}).then(function(g){
+    if(!g.ok)throw new Error('GitHub API error '+g.status+' — check your token.');return g.json();
+  }).then(function(fd2){
+    var sha=fd2.sha,cur=JSON.parse(atob(fd2.content.replace(/
+/g,'')));
+    var ts=new Date().toISOString().slice(0,19);
+    var nr={staff:staff,resource:res,rating:rat,ratingDisplay:'',comment:comment,timestamp:ts,hidden:false};
     cur.remarks.push(nr);
-    cur.resources.forEach(r=>{const m=cur.remarks.filter(x=>x.resource===r.name&&!x.hidden);r.avgRating=m.length?parseFloat((m.reduce((s,x)=>s+x.rating,0)/m.length).toFixed(2)):0;r.remarkCount=m.length;});
-    const enc=btoa(unescape(encodeURIComponent(JSON.stringify(cur,null,2))));
-    const p=await fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:'Add remark: '+staff+' on "'+res+'"',content:enc,sha})});
-    if(!p.ok){const err=await p.json().catch(()=>({}));throw new Error(err.message||'Write failed ('+p.status+')');}
-    D.remarks.push(nr);calc(D);rg();arf();
-    document.getElementById('ss').value=currentUser;
-    document.getElementById('sr').selectedIndex=0;document.getElementById('sc').value='';rat=0;us(0);
-    ss2('fst','✅ Remark saved successfully!','ok');
-  }catch(e){ss2('fst','❌ '+e.message,'err');}
-  finally{document.getElementById('bsub').disabled=false;}
+    cur.resources.forEach(function(r){var m=cur.remarks.filter(function(x){return x.resource===r.name&&!x.hidden;});r.avgRating=m.length?parseFloat((m.reduce(function(s,x){return s+x.rating;},0)/m.length).toFixed(2)):0;r.remarkCount=m.length;});
+    var enc=btoa(unescape(encodeURIComponent(JSON.stringify(cur,null,2))));
+    return fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:'Add remark: '+staff+' on "'+res+'"',content:enc,sha:sha})}).then(function(p){
+      if(!p.ok)return p.json().catch(function(){return {};}).then(function(err){throw new Error(err.message||'Write failed ('+p.status+')');});
+      D.remarks.push(nr);calc(D);rg();arf();
+      document.getElementById('ss').value=currentUser;document.getElementById('sr').selectedIndex=0;document.getElementById('sc').value='';rat=0;us(0);
+      ss2('fst','✅ Remark saved successfully!','ok');
+    });
+  }).catch(function(e){ss2('fst','❌ '+e.message,'err');}).finally(function(){document.getElementById('bsub').disabled=false;});
 }
 
 function onSubjSel(){if(document.getElementById('nr-subj-sel').value)document.getElementById('nr-subj-new').value='';}
@@ -690,45 +601,39 @@ function onSubjNew(){if(document.getElementById('nr-subj-new').value)document.ge
 function onRegSel(){if(document.getElementById('nr-reg-sel').value)document.getElementById('nr-reg-new').value='';}
 function onRegNew(){if(document.getElementById('nr-reg-new').value)document.getElementById('nr-reg-sel').selectedIndex=0;}
 
-async function doNewResource(){
-  const name=document.getElementById('nr-name').value.trim();
-  const url=document.getElementById('nr-url').value.trim();
-  const subj=(document.getElementById('nr-subj-new').value.trim()||document.getElementById('nr-subj-sel').value||'').trim();
-  const reg=(document.getElementById('nr-reg-new').value.trim()||document.getElementById('nr-reg-sel').value||'').trim();
-  const desc=document.getElementById('nr-desc').value.trim();
-  const staff=document.getElementById('nr-staff').value;
+function doNewResource(){
+  var name=document.getElementById('nr-name').value.trim(),url=document.getElementById('nr-url').value.trim();
+  var subj=(document.getElementById('nr-subj-new').value.trim()||document.getElementById('nr-subj-sel').value||'').trim();
+  var reg=(document.getElementById('nr-reg-new').value.trim()||document.getElementById('nr-reg-sel').value||'').trim();
+  var desc=document.getElementById('nr-desc').value.trim(),staff=document.getElementById('nr-staff').value;
   if(!name||!url||!subj||!reg||!desc||!staff){ss2('nr-fst','Please fill in all required fields.','err');return;}
-  if(!url.startsWith('http')){ss2('nr-fst','URL must start with https://','err');return;}
-  if(D.resources.find(r=>r.name.toLowerCase()===name.toLowerCase())){ss2('nr-fst','A resource with that name already exists.','err');return;}
+  if(url.indexOf('http')!==0){ss2('nr-fst','URL must start with https://','err');return;}
+  if(D.resources.find(function(r){return r.name.toLowerCase()===name.toLowerCase();})){ss2('nr-fst','A resource with that name already exists.','err');return;}
   if(!ghToken){ss2('nr-fst','Please enter your GitHub token above.','err');return;}
   document.getElementById('nr-bsub').disabled=true;ss2('nr-fst','Saving to GitHub…','load');
-  try{
-    const g=await fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}});
-    if(!g.ok)throw new Error('GitHub API error '+g.status);
-    const fd2=await g.json(),sha=fd2.sha;
-    const cur=JSON.parse(atob(fd2.content.replace(/\n/g,'')));
-    const newRes={name,subject:subj,region:reg,description:desc,url,avgRating:0,remarkCount:0,addedBy:staff,addedAt:new Date().toISOString().slice(0,19),hidden:false};
-    cur.resources.push(newRes);
-    if(!cur.regions.includes(reg))cur.regions.push(reg);
-    const enc=btoa(unescape(encodeURIComponent(JSON.stringify(cur,null,2))));
-    const p=await fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:'Add resource: "'+name+'" (by '+staff+')',content:enc,sha})});
-    if(!p.ok){const err=await p.json().catch(()=>({}));throw new Error(err.message||'Write failed ('+p.status+')');}
-    const localRes={...newRes,_avg:0,_cnt:0};
-    D.resources.push(localRes);
-    if(!D.regions.includes(reg))D.regions.push(reg);
-    subj.split(',').forEach(s=>{const t=s.trim();if(t&&!Array.from(document.getElementById('fs').options).find(o=>o.value===t)){ao('fs',t);ao('nr-subj-sel',t);}});
-    if(!Array.from(document.getElementById('fr2').options).find(o=>o.value===reg)){ao('fr2',reg);ao('nr-reg-sel',reg);}
-    ao('sr',name);ao('rfr',name);rg();
-    ['nr-name','nr-url','nr-subj-new','nr-reg-new','nr-desc'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('nr-subj-sel').selectedIndex=0;document.getElementById('nr-reg-sel').selectedIndex=0;
-    document.getElementById('nr-staff').value=currentUser;
-    ss2('nr-fst','✅ "'+name+'" added to the database!','ok');
-  }catch(e){ss2('nr-fst','❌ '+e.message,'err');}
-  finally{document.getElementById('nr-bsub').disabled=false;}
+  fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}}).then(function(g){
+    if(!g.ok)throw new Error('GitHub API error '+g.status);return g.json();
+  }).then(function(fd2){
+    var sha=fd2.sha,cur=JSON.parse(atob(fd2.content.replace(/
+/g,'')));
+    var newRes={name:name,subject:subj,region:reg,description:desc,url:url,avgRating:0,remarkCount:0,addedBy:staff,addedAt:new Date().toISOString().slice(0,19),hidden:false};
+    cur.resources.push(newRes);if(cur.regions.indexOf(reg)<0)cur.regions.push(reg);
+    var enc=btoa(unescape(encodeURIComponent(JSON.stringify(cur,null,2))));
+    return fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:'Add resource: "'+name+'" (by '+staff+')',content:enc,sha:sha})}).then(function(p){
+      if(!p.ok)return p.json().catch(function(){return {};}).then(function(err){throw new Error(err.message||'Write failed ('+p.status+')');});
+      D.resources.push(Object.assign({},newRes,{_avg:0,_cnt:0}));if(D.regions.indexOf(reg)<0)D.regions.push(reg);
+      subj.split(',').forEach(function(s){var t=s.trim();if(t&&!Array.from(document.getElementById('fs').options).find(function(o){return o.value===t;})){ao('fs',t);ao('nr-subj-sel',t);}});
+      if(!Array.from(document.getElementById('fr2').options).find(function(o){return o.value===reg;})){ao('fr2',reg);ao('nr-reg-sel',reg);}
+      ao('sr',name);ao('rfr',name);rg();
+      ['nr-name','nr-url','nr-subj-new','nr-reg-new','nr-desc'].forEach(function(id){document.getElementById(id).value='';});
+      document.getElementById('nr-subj-sel').selectedIndex=0;document.getElementById('nr-reg-sel').selectedIndex=0;document.getElementById('nr-staff').value=currentUser;
+      ss2('nr-fst','✅ "'+name+'" added to the database!','ok');
+    });
+  }).catch(function(e){ss2('nr-fst','❌ '+e.message,'err');}).finally(function(){document.getElementById('nr-bsub').disabled=false;});
 }
 
-function sw(id,btn){document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');btn.classList.add('on');}
-function ss2(elId,msg,type){const e=document.getElementById(elId);e.textContent=msg;e.className='fst '+type;}
+function sw(id,btn){document.querySelectorAll('.pane').forEach(function(p){p.classList.remove('on');});document.querySelectorAll('nav button').forEach(function(b){b.classList.remove('on');});document.getElementById('p-'+id).classList.add('on');btn.classList.add('on');}
+function ss2(elId,msg,type){var e=document.getElementById(elId);e.textContent=msg;e.className='fst '+type;}
 
 document.getElementById('l-user').focus();
 </script>
