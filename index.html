@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Online Reference Hub — Northbrook Public Library</title>
 <style>
-  :root{--g:#2e6b3e;--gd:#1e4a2a;--gl:#e8f2eb;--gold:#b8860b;--goldf:#fdf6e3;--red:#c0392b;--redf:#fdf0ee;--t:#1a1a1a;--m:#555;--b:#d0d8d2;--bg:#f7f9f8;--w:#fff;--r:8px;--sh:0 2px 8px rgba(0,0,0,.08)}
+  :root{--g:#2e6b3e;--gd:#1e4a2a;--gl:#e8f2eb;--gold:#b8860b;--goldf:#fdf6e3;--red:#c0392b;--t:#1a1a1a;--m:#555;--b:#d0d8d2;--bg:#f7f9f8;--w:#fff;--r:8px;--sh:0 2px 8px rgba(0,0,0,.08)}
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--t);min-height:100vh}
 
-  /* ── SCREENS ── */
+  /* SCREENS */
   .screen{position:fixed;inset:0;background:var(--g);display:flex;align-items:center;justify-content:center;z-index:9999;padding:1.5rem}
   .screen.off{display:none}
   .box{background:var(--w);border-radius:14px;padding:2.5rem 2.2rem;width:100%;max-width:400px;box-shadow:0 8px 40px rgba(0,0,0,.28);display:flex;flex-direction:column;align-items:center;gap:1.1rem}
@@ -26,14 +26,14 @@
   .box-err{background:#f8d7da;color:var(--red);border-radius:6px;padding:.5rem .8rem;font-size:.83rem;text-align:center;display:none;width:100%}
   .box-err.show{display:block}
   .mod-field{display:none}
-  .mod-badge-box{background:var(--goldf);border:1px solid var(--gold);border-radius:6px;padding:.45rem .75rem;font-size:.8rem;color:#5a4000;display:none;width:100%;text-align:center}
+  .mod-hint{background:var(--goldf);border:1px solid var(--gold);border-radius:6px;padding:.45rem .75rem;font-size:.8rem;color:#5a4000;display:none;width:100%;text-align:center}
   .shake{animation:shake .35s ease}
   @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
 
-  /* ── APP ── */
+  /* APP */
   #app{display:none}
 
-  /* ── HEADER ── */
+  /* HEADER */
   header{background:var(--g);color:var(--w);padding:0 2rem;display:flex;align-items:center;gap:1.2rem;height:64px;box-shadow:0 2px 6px rgba(0,0,0,.18);position:sticky;top:0;z-index:100}
   .logo{width:40px;height:40px;background:var(--w);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
   header h1{font-size:1.15rem;font-weight:700;flex:1}
@@ -44,19 +44,19 @@
   .btn-logout{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:var(--w);border-radius:5px;padding:.3rem .8rem;font-size:.78rem;cursor:pointer;white-space:nowrap}
   .btn-logout:hover{background:rgba(255,255,255,.3)}
 
-  /* ── NAV ── */
+  /* NAV */
   nav{background:var(--gd);display:flex;padding:0 2rem;flex-wrap:wrap}
   nav button{background:none;border:none;color:rgba(255,255,255,.7);padding:.7rem 1.1rem;font-size:.86rem;font-weight:500;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s}
   nav button:hover{color:var(--w);background:rgba(255,255,255,.07)}
   nav button.on{color:var(--w);border-bottom-color:var(--gold)}
 
-  /* ── MAIN ── */
+  /* MAIN */
   main{max-width:1200px;margin:0 auto;padding:1.5rem 1.5rem 3rem}
   .pane{display:none}.pane.on{display:block}
   .stitle{font-size:1.3rem;font-weight:700;color:var(--gd);margin-bottom:.3rem}
   .sdesc{color:var(--m);font-size:.88rem;margin-bottom:1.2rem}
 
-  /* ── FILTER BAR ── */
+  /* FILTER BAR */
   .fbar{background:var(--w);border:1px solid var(--b);border-radius:var(--r);padding:1rem 1.2rem;display:flex;flex-wrap:wrap;gap:.75rem;align-items:flex-end;margin-bottom:1.2rem;box-shadow:var(--sh)}
   .fbar label{font-size:.78rem;font-weight:600;color:var(--gd);display:block;margin-bottom:.25rem}
   .fbar input,.fbar select{border:1px solid var(--b);border-radius:5px;padding:.42rem .7rem;font-size:.88rem;background:var(--w);min-width:160px}
@@ -68,7 +68,7 @@
   .toggle-hidden{display:flex;align-items:center;gap:.5rem;align-self:flex-end;padding-bottom:.45rem;font-size:.82rem;color:var(--m);cursor:pointer;user-select:none}
   .toggle-hidden input{cursor:pointer;accent-color:var(--g)}
 
-  /* ── RESOURCE GRID ── */
+  /* GRID */
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem}
   .card{background:var(--w);border:1px solid var(--b);border-radius:var(--r);padding:1.1rem 1.2rem;box-shadow:var(--sh);display:flex;flex-direction:column;gap:.45rem;cursor:pointer;transition:box-shadow .15s,border-color .15s;position:relative}
   .card:hover{box-shadow:0 4px 16px rgba(46,107,62,.13);border-color:var(--g)}
@@ -88,9 +88,9 @@
   .btn-card-mod{background:rgba(255,255,255,.92);border:1px solid var(--b);border-radius:4px;padding:.18rem .45rem;font-size:.7rem;color:var(--m);cursor:pointer;transition:all .12s}
   .btn-card-mod:hover{border-color:var(--red);color:var(--red)}
   .btn-card-mod.restore:hover{border-color:var(--g);color:var(--g)}
-  .hidden-badge-res{background:#fee;color:#c0392b;font-size:.68rem;font-weight:600;padding:.15rem .45rem;border-radius:10px;margin-left:.3rem}
+  .hidden-badge-res{background:#fee;color:var(--red);font-size:.68rem;font-weight:600;padding:.15rem .45rem;border-radius:10px;margin-left:.3rem}
 
-  /* ── MODAL ── */
+  /* MODAL */
   .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:200;align-items:center;justify-content:center;padding:1rem}
   .ov.on{display:flex}
   .modal{background:var(--w);border-radius:12px;width:100%;max-width:640px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.22)}
@@ -101,9 +101,7 @@
   .mb{padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:1.1rem}
   .mdesc{font-size:.9rem;color:var(--m);line-height:1.6}
   .murl{font-size:.88rem;color:var(--g);word-break:break-all;text-decoration:underline;cursor:pointer}
-
-  /* ── REMARK ITEMS ── */
-  .ri{background:var(--gl);border-radius:6px;padding:.7rem .9rem;font-size:.85rem;position:relative}
+  .ri{background:var(--gl);border-radius:6px;padding:.7rem .9rem;font-size:.85rem}
   .ri.is-hidden{background:#f5f5f5;border:1px dashed #ccc;opacity:.65}
   .rit{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.25rem;gap:.5rem}
   .ris{font-weight:700;color:var(--gd)}.rits{font-size:.75rem;color:var(--m)}
@@ -113,7 +111,7 @@
   .btn-hide.unhide:hover{border-color:var(--g);color:var(--g)}
   .hidden-badge{font-size:.7rem;color:#999;font-style:italic;margin-left:.3rem}
 
-  /* ── TABLE ── */
+  /* TABLE */
   table{width:100%;border-collapse:collapse;font-size:.87rem;background:var(--w);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
   th{background:var(--g);color:var(--w);padding:.7rem 1rem;text-align:left;font-weight:600;font-size:.82rem}
   td{padding:.65rem 1rem;border-bottom:1px solid var(--b);vertical-align:top}
@@ -125,7 +123,7 @@
   .tbl-hide:hover{border-color:var(--red);color:var(--red)}
   .tbl-hide.unhide:hover{border-color:var(--g);color:var(--g)}
 
-  /* ── FORM CARDS ── */
+  /* FORMS */
   .scard{background:var(--w);border:1px solid var(--b);border-radius:var(--r);padding:1.4rem 1.5rem;box-shadow:var(--sh);max-width:600px}
   .ftitle{font-size:1.05rem;font-weight:700;color:var(--gd);margin-bottom:1rem}
   .fr{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.85rem}
@@ -146,7 +144,7 @@
   .fst.err{background:#f8d7da;color:var(--red);display:block}
   .fst.load{background:var(--gl);color:var(--gd);display:block}
 
-  /* ── PAT BANNER ── */
+  /* PAT BANNER */
   .pbanner{background:var(--goldf);border:1px solid var(--gold);border-radius:var(--r);padding:.9rem 1.1rem;font-size:.85rem;color:#5a4000;margin-bottom:1.2rem}
   .pbanner strong{display:block;margin-bottom:.4rem}
   .prow{display:flex;gap:.5rem;margin-top:.5rem;flex-wrap:wrap;align-items:center}
@@ -164,7 +162,7 @@
 </head>
 <body>
 
-<!-- ════ SCREEN 1: PASSWORD ════ -->
+<!-- SCREEN 1: PASSWORD -->
 <div class="screen" id="s-login">
   <div class="box">
     <div class="box-logo">📚</div>
@@ -179,28 +177,55 @@
   </div>
 </div>
 
-<!-- ════ SCREEN 2: WHO ARE YOU? ════ -->
+<!-- SCREEN 2: WHO ARE YOU — hard-coded options, available before data loads -->
 <div class="screen off" id="s-who">
   <div class="box">
     <div class="box-logo">👋</div>
     <div class="box-title">Welcome!</div>
-    <div class="box-sub">Select your name. Moderators: enter your mod password below to unlock moderator tools.</div>
+    <div class="box-sub">Select your name. Moderators may enter their mod password below to unlock moderator tools.</div>
     <div class="form-inner">
-      <div class="lf"><label>Your Name</label>
-        <select id="who-sel" onchange="onWhoChange()"><option value="">— Select your name —</option></select>
+      <div class="lf">
+        <label>Your Name</label>
+        <select id="who-sel" onchange="onWhoChange()">
+          <option value="">— Select your name —</option>
+          <option value="Adrienne">Adrienne</option>
+          <option value="Amy">Amy</option>
+          <option value="Bill">Bill</option>
+          <option value="Bryan">Bryan</option>
+          <option value="Caitlyn">Caitlyn</option>
+          <option value="Carla">Carla</option>
+          <option value="Debbie">Debbie</option>
+          <option value="Diane">Diane</option>
+          <option value="Harvey">Harvey</option>
+          <option value="Jill">Jill</option>
+          <option value="Joe">Joe</option>
+          <option value="Lori">Lori</option>
+          <option value="Lucy">Lucy</option>
+          <option value="Margo">Margo</option>
+          <option value="Mary Lynn">Mary Lynn</option>
+          <option value="Paula">Paula</option>
+          <option value="Volunteers">Volunteers</option>
+          <option value="Brenna">Brenna</option>
+          <option value="SAMM">SAMM</option>
+          <option value="Lev">Lev</option>
+          <option value="Linnea">Linnea</option>
+          <option value="Phil">Phil</option>
+          <option value="Tracy">Tracy</option>
+          <option value="Susan">Susan</option>
+        </select>
       </div>
       <div class="lf mod-field" id="mod-field">
-        <label>Moderator Password <span style="font-weight:400;color:var(--m)">(optional — leave blank for standard access)</span></label>
-        <input id="mod-pass" type="password" placeholder="Enter mod password…" autocomplete="off">
+        <label>Moderator Password <span style="font-weight:400;color:var(--m)">(optional)</span></label>
+        <input id="mod-pass" type="password" placeholder="Enter mod password to unlock mod tools…" autocomplete="off">
       </div>
-      <div class="mod-badge-box" id="mod-hint">🛡️ You are listed as a moderator. Enter your mod password to unlock mod tools, or leave blank for standard access.</div>
-      <div class="box-err" id="who-err">Please select your name.</div>
+      <div class="mod-hint" id="mod-hint">🛡️ You are listed as a moderator. Enter your mod password to unlock mod tools, or leave blank for standard access.</div>
+      <div class="box-err" id="who-err">Please select your name to continue.</div>
       <button class="btn-primary" onclick="doWho()">Enter Hub</button>
     </div>
   </div>
 </div>
 
-<!-- ════ APP SHELL ════ -->
+<!-- APP SHELL -->
 <div id="app">
   <header>
     <div class="logo">📚</div>
@@ -234,12 +259,8 @@
         <button class="bclear" onclick="cf()">Clear</button>
         <span class="fcnt" id="fcnt"></span>
       </div>
-      <!-- Mod: show hidden resources toggle -->
       <div id="mod-res-bar" style="display:none;margin-bottom:.9rem">
-        <label class="toggle-hidden">
-          <input type="checkbox" id="show-hidden-res" onchange="af()">
-          🛡️ Show hidden resources (moderator view)
-        </label>
+        <label class="toggle-hidden"><input type="checkbox" id="show-hidden-res" onchange="af()"> 🛡️ Show hidden resources (mod view)</label>
       </div>
       <div class="grid" id="grid"></div>
       <div class="nores" id="nores" style="display:none">No resources match your filters.</div>
@@ -253,10 +274,7 @@
         <div class="fg"><label>Staff</label><select id="rfs" onchange="arf()"><option value="">All Staff</option></select></div>
         <div class="fg"><label>Resource</label><select id="rfr" onchange="arf()"><option value="">All Resources</option></select></div>
         <button class="bclear" onclick="crf()">Clear</button>
-        <label class="toggle-hidden">
-          <input type="checkbox" id="show-hidden" onchange="arf()">
-          Show my hidden remarks
-        </label>
+        <label class="toggle-hidden"><input type="checkbox" id="show-hidden" onchange="arf()"> Show hidden remarks</label>
         <span class="fcnt" id="rcnt"></span>
       </div>
       <div style="overflow-x:auto">
@@ -272,10 +290,10 @@
       <p class="sdesc">Rate a resource and leave a comment for your colleagues.</p>
       <div class="pbanner" id="pb">
         <strong>🔑 GitHub Token Required</strong>
-        To save or hide remarks, enter your GitHub Personal Access Token (PAT) below. Kept in memory for this tab only — never stored or logged.
+        Enter your GitHub Personal Access Token (PAT) to save data. Kept in memory for this tab only — never stored or logged.
         <div class="prow">
           <input type="password" id="pi" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-          <button class="bpat" onclick="savePAT()">Save Token</button>
+          <button class="bpat" onclick="savePAT('pi')">Save Token</button>
         </div>
         <div class="tok" id="tok">✅ Token active for this session.</div>
       </div>
@@ -304,19 +322,16 @@
       <p class="sdesc">Add a new resource to the shared database. It will appear on the Search Dashboard immediately after saving.</p>
       <div class="pbanner" id="pb2">
         <strong>🔑 GitHub Token Required</strong>
-        Enter your GitHub Personal Access Token (PAT) to save new resources. Same token as the Submit a Remark tab — if you've already entered it there, it's already active.
+        Same token as the Submit a Remark tab — if you've already entered it there, it's already active here too.
         <div class="prow">
           <input type="password" id="pi2" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-          <button class="bpat" onclick="savePAT2()">Save Token</button>
+          <button class="bpat" onclick="savePAT('pi2')">Save Token</button>
         </div>
         <div class="tok" id="tok2">✅ Token active for this session.</div>
       </div>
       <div class="scard">
         <div class="ftitle">New Online Reference</div>
-        <div class="fr">
-          <label>Resource Name *</label>
-          <input type="text" id="nr-name" placeholder="e.g. ProQuest Central">
-        </div>
+        <div class="fr"><label>Resource Name *</label><input type="text" id="nr-name" placeholder="e.g. ProQuest Central"></div>
         <div class="fr">
           <label>URL *</label>
           <input type="url" id="nr-url" placeholder="https://…">
@@ -325,36 +340,22 @@
         <div class="fr">
           <label>Subject *</label>
           <div class="fr-row">
-            <div class="fr">
-              <select id="nr-subj-sel" onchange="onSubjSel()"><option value="">— Pick existing —</option></select>
-            </div>
-            <div style="align-self:center;font-size:.82rem;color:var(--m);padding-bottom:0;flex-shrink:0">or</div>
-            <div class="fr">
-              <input type="text" id="nr-subj-new" placeholder="Type a new subject…" oninput="onSubjNew()">
-            </div>
+            <div class="fr"><select id="nr-subj-sel" onchange="onSubjSel()"><option value="">— Pick existing —</option></select></div>
+            <div style="align-self:center;font-size:.82rem;color:var(--m);flex-shrink:0">or</div>
+            <div class="fr"><input type="text" id="nr-subj-new" placeholder="Type a new subject…" oninput="onSubjNew()"></div>
           </div>
-          <span class="hint">Select an existing subject OR type a new one. For multiple subjects separate with commas.</span>
+          <span class="hint">Select existing OR type a new one. Separate multiple subjects with commas.</span>
         </div>
         <div class="fr">
           <label>Region *</label>
           <div class="fr-row">
-            <div class="fr">
-              <select id="nr-reg-sel" onchange="onRegSel()"><option value="">— Pick existing —</option></select>
-            </div>
+            <div class="fr"><select id="nr-reg-sel" onchange="onRegSel()"><option value="">— Pick existing —</option></select></div>
             <div style="align-self:center;font-size:.82rem;color:var(--m);flex-shrink:0">or</div>
-            <div class="fr">
-              <input type="text" id="nr-reg-new" placeholder="Type a new region…" oninput="onRegNew()">
-            </div>
+            <div class="fr"><input type="text" id="nr-reg-new" placeholder="Type a new region…" oninput="onRegNew()"></div>
           </div>
         </div>
-        <div class="fr">
-          <label>Description *</label>
-          <textarea id="nr-desc" placeholder="Brief description of what this resource offers…"></textarea>
-        </div>
-        <div class="fr">
-          <label>Submitted by *</label>
-          <select id="nr-staff"><option value="">— Select your name —</option></select>
-        </div>
+        <div class="fr"><label>Description *</label><textarea id="nr-desc" placeholder="Brief description of what this resource offers…"></textarea></div>
+        <div class="fr"><label>Submitted by *</label><select id="nr-staff"><option value="">— Select your name —</option></select></div>
         <button class="bsub" id="nr-bsub" onclick="doNewResource()">Add to Database</button>
         <div class="fst" id="nr-fst"></div>
       </div>
@@ -363,17 +364,15 @@
   </main>
 </div>
 
-<!-- RESOURCE DETAIL MODAL -->
+<!-- RESOURCE MODAL -->
 <div class="ov" id="ov" onclick="clov(event)">
   <div class="modal">
     <div class="mh"><h2 id="mn"></h2><button class="mx" onclick="clom()">×</button></div>
     <div class="mb">
-      <div id="mm"></div>
-      <div id="mavg"></div>
+      <div id="mm"></div><div id="mavg"></div>
       <div class="mdesc" id="md"></div>
       <div class="murl" id="mu" onclick="goURL()"></div>
-      <div>
-        <strong style="font-size:.9rem;color:var(--gd)">Staff Remarks</strong>
+      <div><strong style="font-size:.9rem;color:var(--gd)">Staff Remarks</strong>
         <div id="mr" style="margin-top:.5rem;display:flex;flex-direction:column;gap:.7rem"></div>
       </div>
     </div>
@@ -381,19 +380,19 @@
 </div>
 
 <script>
-// ── CONFIG ────────────────────────────────────────────────
-const CREDS     = { user:'nbkadultservices', pass:'ZV8bJiN6!p7DPMC3#QgX*MWJeEqO%LjNWc6g8Bcm' };
-const MOD_PASS  = 'Nbk@Mod2025!';
-const MOD_NAMES = ['Phil','Linnea','Susan','Lev','Tracy'];
-const GU='linlun-bit', DR='online-reference-hub-data', DF='data.json', BR='main';
-const RAW = 'https://raw.githubusercontent.com/'+GU+'/'+DR+'/'+BR+'/'+DF;
-const API = 'https://api.github.com/repos/'+GU+'/'+DR+'/contents/'+DF;
+const CREDS    = {user:'nbkadultservices',pass:'ZV8bJiN6!p7DPMC3#QgX*MWJeEqO%LjNWc6g8Bcm'};
+const MOD_PASS = 'Nbk@Mod2025!';
+const MOD_NAMES= ["Phil", "Linnea", "Susan", "Lev", "Tracy"];
+const ALL_STAFF= ["Adrienne", "Amy", "Bill", "Bryan", "Caitlyn", "Carla", "Debbie", "Diane", "Harvey", "Jill", "Joe", "Lori", "Lucy", "Margo", "Mary Lynn", "Paula", "Volunteers", "Brenna", "SAMM", "Lev", "Linnea", "Phil", "Tracy", "Susan"];
+const ALL_SUBJ = ["Animals/Pets", "Art", "Civics/Elections", "Consumers", "Finance/Business", "Genealogy/Heritage", "General Research", "Geography", "Health/Medical", "History", "Housing", "Legal", "Music", "News", "Social Services", "Writing", "Youth"];
+const ALL_REG  = ["Local - Northbrook/shore", "City - Chicago", "State - IL", "National - USA", "Continental - USA/Canada/Mexico", "International"];
+const GU='linlun-bit',DR='online-reference-hub-data',DF='data.json',BR='main';
+const RAW='https://raw.githubusercontent.com/'+GU+'/'+DR+'/'+BR+'/'+DF;
+const API='https://api.github.com/repos/'+GU+'/'+DR+'/contents/'+DF;
 
-// ── STATE ─────────────────────────────────────────────────
-let D=null, rat=0, ghToken='', murl='', currentUser='', isMod=false, modalResourceName='';
-const SEED={"resources": [{"name": "American Ancestors®", "subject": "Genealogy/Heritage", "region": "National - USA", "description": "A National Center for Family History, Heritage & Culture", "url": "https://www.americanancestors.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Annenberg Classroom", "subject": "Civics/Elections, Youth", "region": "National - USA", "description": "Resources for Excellent Civics Education. Annenberg Classroom's free resources include over 65 videos on constitutional concepts and Supreme Court cases as well as games, lesson plans, timelines", "url": "https://www.annenbergclassroom.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Annual Reports", "subject": "Finance/Business", "region": "International", "description": "Annual reports for 10,379 international companies. Search 151,964 annual reports from 10,379 global companies help you make the right investment decision.", "url": "https://www.annualreports.com/", "avgRating": 0, "remarkCount": 0}, {"name": "Artstor | JSTOR", "subject": "History, Art", "region": "International", "description": "Explore Artstor’s collections of high-quality images, curated from leading museums and archives around the world.", "url": "https://www.jstor.org/site/artstor/", "avgRating": 0, "remarkCount": 0}, {"name": "Ballotpedia", "subject": "Civics/Elections", "region": "National - USA", "description": "Ballotpedia is the digital encyclopedia of American politics and elections. Our goal is to inform people about politics", "url": "https://ballotpedia.org/Main_Page", "avgRating": 0, "remarkCount": 0}, {"name": "BBB | Better Business Bureau", "subject": "Consumers, Finance/Business", "region": "Continental - USA/Canada/Mexico", "description": "BBB helps consumers and businesses in the United States and Canada. Find trusted BBB Accredited Businesses. Get BBB Accredited. File a complaint...", "url": "https://www.bbb.org/", "avgRating": 5.0, "remarkCount": 1}, {"name": "Citizens Utility Board", "subject": "Consumers", "region": "State - IL", "description": "Fight utility rate hikes, promote clean energy, and advocate for consumer protections in Illinois.", "url": "https://www.citizensutilityboard.org/", "avgRating": 0, "remarkCount": 0}, {"name": "City-Data.com", "subject": "Geography", "region": "City - Chicago", "description": "By collecting and analyzing data from a variety of government and private sources, we're able to create detailed, informative profiles for every city in the United States. From crime rates to weather patterns, you’ll find the data you're looking for on City-Data.com", "url": "http://city-data.com", "avgRating": 2.25, "remarkCount": 4}, {"name": "Classics For Kids", "subject": "Youth, Music", "region": "International", "description": "Classic music for children", "url": "https://www.classicsforkids.com/", "avgRating": 0, "remarkCount": 0}, {"name": "CNET Reviews", "subject": "Consumers", "region": "National - USA", "description": "When you’re considering whether to open your wallet, we have the in-depth analysis and buying advice to help you decide.", "url": "https://www.cnet.com/reviews/", "avgRating": 0, "remarkCount": 0}, {"name": "Cyndi's List", "subject": "Genealogy/Heritage", "region": "International", "description": "Cyndi's List of Genealogy Sites on the Internet", "url": "https://www.cyndislist.com/us/", "avgRating": 0, "remarkCount": 0}, {"name": "Data USA", "subject": "Geography", "region": "National - USA", "description": "The definitive place to explore US public data", "url": "https://datausa.io/", "avgRating": 4.0, "remarkCount": 1}, {"name": "Ellis Island Passenger Database", "subject": "Genealogy/Heritage", "region": "International", "description": "Ellis Island Passenger Search: Connect With Your Heritage. StatueofLiberty.org", "url": "https://www.statueofliberty.org/discover/passenger-ship-search/", "avgRating": 0, "remarkCount": 0}, {"name": "Encyclopedia of Chicago", "subject": "History", "region": "City - Chicago", "description": "Chicago History Museum, The Newberry Library, and Northwestern University", "url": "http://www.encyclopedia.chicagohistory.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Explore Chicago Collections", "subject": "History", "region": "City - Chicago", "description": "The place to discover the history and culture of Chicago.", "url": "https://explore.chicagocollections.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Illinois Digital Heritage Hub", "subject": "Genealogy/Heritage", "region": "State - IL", "description": "A Gateway to Illinois State History. The Illinois Digital Heritage Hub brings together unique digital cultural heritage resources from across Illinois.", "url": "https://idhh.dp.la/", "avgRating": 0, "remarkCount": 0}, {"name": "Illinois Digital Newspaper Collection (UIUC)", "subject": "General Research, News", "region": "State - IL", "description": "The Illinois Digital Newspaper Collections are free to search, free to browse, and free to download. There are five collections on this site.", "url": "https://idnc.library.illinois.edu/", "avgRating": 0, "remarkCount": 0}, {"name": "Illinois Legal Aid Online", "subject": "Legal", "region": "State - IL", "description": "Learn about Illinois law and take action with free legal forms, referrals and clear information on issues dealing with family, housing, debt, work", "url": "https://www.illinoislegalaid.org/", "avgRating": 0, "remarkCount": 0}, {"name": "JewishGen.org", "subject": "Genealogy/Heritage", "region": "International", "description": "Welcome to JewishGen - The Global Home for Jewish Genealogy. Explore millions of records from around the world, identify relatives, discover the towns of your ancestors, experience how they lived, connect with our global JewishGen community, and more.", "url": "http://jewishgen.org", "avgRating": 0, "remarkCount": 0}, {"name": "JSTOR", "subject": "General Research", "region": "International", "description": "Free online reading for over 10 million articles", "url": "https://www.jstor.org", "avgRating": 0, "remarkCount": 0}, {"name": "Martindale", "subject": "Legal", "region": "National - USA", "description": "Our directory contains listings for more than one millon lawyers and law firms.", "url": "https://www.martindale.com/find-attorneys/", "avgRating": 0, "remarkCount": 0}, {"name": "Merck Manual (all 3 editions)", "subject": "Health/Medical", "region": "International", "description": "Consumer version print editions: The Merck Manual 20th Edition medical reference, Veterinary Manual, Eleventh Edition, and The Merck Manual Go-To Home Guide For Symptoms", "url": "https://www.merckmanuals.com/home/resourcespages/books", "avgRating": 0, "remarkCount": 0}, {"name": "Nolo", "subject": "Legal", "region": "National - USA", "description": "Giving everyday people the tools to solve their legal issues since 1971", "url": "https://www.nolo.com/", "avgRating": 0, "remarkCount": 0}, {"name": "Northbrook Voices", "subject": "Genealogy/Heritage, History", "region": "Local - Northbrook/shore", "description": "Recording and preserving the stories of life in Northbrook. A project of the Northbrook History Museum and the Northbrook Public Library.", "url": "https://www.northbrookvoices.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Prescriber's Digital Reference", "subject": "Health/Medical", "region": "National - USA", "description": "Prescribers’ Digital Reference®\nPDR Drug Information. Fully searchable. Fully digital. Trusted by generations of healthcare providers, PDR.net supports prescribing decisions and patient adherence to improve health.", "url": "https://www.pdr.net/", "avgRating": 0, "remarkCount": 0}, {"name": "ProPublica Nonprofit Explorer", "subject": "Social Services, Finance/Business", "region": "National - USA", "description": "Browse millions of annual returns filed by tax-exempt organizations with ProPublica’s Nonprofit Explorer. See details like executive compensation, revenue, expenses and more. Search for an organization or a person, or search the full text of filings.", "url": "https://projects.propublica.org/nonprofits/", "avgRating": 0, "remarkCount": 0}, {"name": "Purdue OWL (Online Writing Lab)", "subject": "Writing", "region": "National - USA", "description": "The Online Writing Lab (the Purdue OWL) at Purdue University houses writing resources and instructional material, and we provide these as a free service at Purdue.", "url": "https://owl.purdue.edu/owl/", "avgRating": 0, "remarkCount": 0}, {"name": "Top Doctors", "subject": "Health/Medical", "region": "National - USA", "description": "", "url": "", "avgRating": 0, "remarkCount": 0}, {"name": "Yellow Pages Directory", "subject": "General Research", "region": "National - USA", "description": "", "url": "https://www.yellowpages.com/", "avgRating": 0, "remarkCount": 0}], "remarks": [{"staff": "Diane", "resource": "City-Data.com", "rating": 3, "ratingDisplay": "★★★", "comment": "lala testing", "timestamp": "2026-06-26T09:36:52"}, {"staff": "Linnéa", "resource": "Data USA", "rating": 4, "ratingDisplay": "★★★★", "comment": "TESTING this is an okay thing", "timestamp": "2026-07-29T18:10:18"}, {"staff": "Debbie", "resource": "City-Data.com", "rating": 1, "ratingDisplay": "★", "comment": "This one's not so great imo", "timestamp": "2026-07-29T18:41:19"}, {"staff": "Adrienne", "resource": "BBB | Better Business Bureau", "rating": 5, "ratingDisplay": "★★★★★", "comment": "love this resource", "timestamp": "2026-07-29T19:06:51"}, {"staff": "Diane", "resource": "City-Data.com", "rating": 1, "ratingDisplay": "★", "comment": "didn't find this great", "timestamp": "2026-07-29T18:47:58"}, {"staff": "Caitlyn", "resource": "City-Data.com", "rating": 4, "ratingDisplay": "★★★★", "comment": "lalala", "timestamp": "2026-07-29T18:59:05"}], "categories": ["Animals/Pets", "Art", "Civics/Elections", "Consumers", "Finance/Business", "Genealogy/Heritage", "General Research", "Geography", "Health/Medical", "History", "Housing", "Legal", "Music", "News", "Social Services", "Writing", "Youth"], "regions": ["Local - Northbrook/shore", "City - Chicago", "State - IL", "National - USA", "Continental - USA/Canada/Mexico", "International"], "staff": ["Adrienne", "Amy", "Bill", "Bryan", "Caitlyn", "Carla", "Debbie", "Diane", "Harvey", "Jill", "Joe", "Lori", "Lucy", "Margo", "Mary Lynn", "Paula", "Volunteers", "Brenna", "SAMM", "Lev", "Linnéa", "Phil", "Tracy", "Susan"]};
+let D=null,rat=0,ghToken='',murl='',currentUser='',isMod=false,modalResourceName='';
+const SEED={"resources": [{"name": "American Ancestors®", "subject": "Genealogy/Heritage", "region": "National - USA", "description": "A National Center for Family History, Heritage & Culture", "url": "https://www.americanancestors.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Annenberg Classroom", "subject": "Civics/Elections, Youth", "region": "National - USA", "description": "Resources for Excellent Civics Education. Annenberg Classroom's free resources include over 65 videos on constitutional concepts and Supreme Court cases as well as games, lesson plans, timelines", "url": "https://www.annenbergclassroom.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Annual Reports", "subject": "Finance/Business", "region": "International", "description": "Annual reports for 10,379 international companies. Search 151,964 annual reports from 10,379 global companies help you make the right investment decision.", "url": "https://www.annualreports.com/", "avgRating": 0, "remarkCount": 0}, {"name": "Artstor | JSTOR", "subject": "History, Art", "region": "International", "description": "Explore Artstor’s collections of high-quality images, curated from leading museums and archives around the world.", "url": "https://www.jstor.org/site/artstor/", "avgRating": 0, "remarkCount": 0}, {"name": "Ballotpedia", "subject": "Civics/Elections", "region": "National - USA", "description": "Ballotpedia is the digital encyclopedia of American politics and elections. Our goal is to inform people about politics", "url": "https://ballotpedia.org/Main_Page", "avgRating": 0, "remarkCount": 0}, {"name": "BBB | Better Business Bureau", "subject": "Consumers, Finance/Business", "region": "Continental - USA/Canada/Mexico", "description": "BBB helps consumers and businesses in the United States and Canada. Find trusted BBB Accredited Businesses. Get BBB Accredited. File a complaint...", "url": "https://www.bbb.org/", "avgRating": 5.0, "remarkCount": 1}, {"name": "Citizens Utility Board", "subject": "Consumers", "region": "State - IL", "description": "Fight utility rate hikes, promote clean energy, and advocate for consumer protections in Illinois.", "url": "https://www.citizensutilityboard.org/", "avgRating": 0, "remarkCount": 0}, {"name": "City-Data.com", "subject": "Geography", "region": "City - Chicago", "description": "By collecting and analyzing data from a variety of government and private sources, we're able to create detailed, informative profiles for every city in the United States. From crime rates to weather patterns, you’ll find the data you're looking for on City-Data.com", "url": "http://city-data.com", "avgRating": 2.25, "remarkCount": 4}, {"name": "Classics For Kids", "subject": "Youth, Music", "region": "International", "description": "Classic music for children", "url": "https://www.classicsforkids.com/", "avgRating": 0, "remarkCount": 0}, {"name": "CNET Reviews", "subject": "Consumers", "region": "National - USA", "description": "When you’re considering whether to open your wallet, we have the in-depth analysis and buying advice to help you decide.", "url": "https://www.cnet.com/reviews/", "avgRating": 0, "remarkCount": 0}, {"name": "Cyndi's List", "subject": "Genealogy/Heritage", "region": "International", "description": "Cyndi's List of Genealogy Sites on the Internet", "url": "https://www.cyndislist.com/us/", "avgRating": 0, "remarkCount": 0}, {"name": "Data USA", "subject": "Geography", "region": "National - USA", "description": "The definitive place to explore US public data", "url": "https://datausa.io/", "avgRating": 4.0, "remarkCount": 1}, {"name": "Ellis Island Passenger Database", "subject": "Genealogy/Heritage", "region": "International", "description": "Ellis Island Passenger Search: Connect With Your Heritage. StatueofLiberty.org", "url": "https://www.statueofliberty.org/discover/passenger-ship-search/", "avgRating": 0, "remarkCount": 0}, {"name": "Encyclopedia of Chicago", "subject": "History", "region": "City - Chicago", "description": "Chicago History Museum, The Newberry Library, and Northwestern University", "url": "http://www.encyclopedia.chicagohistory.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Explore Chicago Collections", "subject": "History", "region": "City - Chicago", "description": "The place to discover the history and culture of Chicago.", "url": "https://explore.chicagocollections.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Illinois Digital Heritage Hub", "subject": "Genealogy/Heritage", "region": "State - IL", "description": "A Gateway to Illinois State History. The Illinois Digital Heritage Hub brings together unique digital cultural heritage resources from across Illinois.", "url": "https://idhh.dp.la/", "avgRating": 0, "remarkCount": 0}, {"name": "Illinois Digital Newspaper Collection (UIUC)", "subject": "General Research, News", "region": "State - IL", "description": "The Illinois Digital Newspaper Collections are free to search, free to browse, and free to download. There are five collections on this site.", "url": "https://idnc.library.illinois.edu/", "avgRating": 0, "remarkCount": 0}, {"name": "Illinois Legal Aid Online", "subject": "Legal", "region": "State - IL", "description": "Learn about Illinois law and take action with free legal forms, referrals and clear information on issues dealing with family, housing, debt, work", "url": "https://www.illinoislegalaid.org/", "avgRating": 0, "remarkCount": 0}, {"name": "JewishGen.org", "subject": "Genealogy/Heritage", "region": "International", "description": "Welcome to JewishGen - The Global Home for Jewish Genealogy. Explore millions of records from around the world, identify relatives, discover the towns of your ancestors, experience how they lived, connect with our global JewishGen community, and more.", "url": "http://jewishgen.org", "avgRating": 0, "remarkCount": 0}, {"name": "JSTOR", "subject": "General Research", "region": "International", "description": "Free online reading for over 10 million articles", "url": "https://www.jstor.org", "avgRating": 0, "remarkCount": 0}, {"name": "Martindale", "subject": "Legal", "region": "National - USA", "description": "Our directory contains listings for more than one millon lawyers and law firms.", "url": "https://www.martindale.com/find-attorneys/", "avgRating": 0, "remarkCount": 0}, {"name": "Merck Manual (all 3 editions)", "subject": "Health/Medical", "region": "International", "description": "Consumer version print editions: The Merck Manual 20th Edition medical reference, Veterinary Manual, Eleventh Edition, and The Merck Manual Go-To Home Guide For Symptoms", "url": "https://www.merckmanuals.com/home/resourcespages/books", "avgRating": 0, "remarkCount": 0}, {"name": "Nolo", "subject": "Legal", "region": "National - USA", "description": "Giving everyday people the tools to solve their legal issues since 1971", "url": "https://www.nolo.com/", "avgRating": 0, "remarkCount": 0}, {"name": "Northbrook Voices", "subject": "Genealogy/Heritage, History", "region": "Local - Northbrook/shore", "description": "Recording and preserving the stories of life in Northbrook. A project of the Northbrook History Museum and the Northbrook Public Library.", "url": "https://www.northbrookvoices.org/", "avgRating": 0, "remarkCount": 0}, {"name": "Prescriber's Digital Reference", "subject": "Health/Medical", "region": "National - USA", "description": "Prescribers’ Digital Reference®\nPDR Drug Information. Fully searchable. Fully digital. Trusted by generations of healthcare providers, PDR.net supports prescribing decisions and patient adherence to improve health.", "url": "https://www.pdr.net/", "avgRating": 0, "remarkCount": 0}, {"name": "ProPublica Nonprofit Explorer", "subject": "Social Services, Finance/Business", "region": "National - USA", "description": "Browse millions of annual returns filed by tax-exempt organizations with ProPublica’s Nonprofit Explorer. See details like executive compensation, revenue, expenses and more. Search for an organization or a person, or search the full text of filings.", "url": "https://projects.propublica.org/nonprofits/", "avgRating": 0, "remarkCount": 0}, {"name": "Purdue OWL (Online Writing Lab)", "subject": "Writing", "region": "National - USA", "description": "The Online Writing Lab (the Purdue OWL) at Purdue University houses writing resources and instructional material, and we provide these as a free service at Purdue.", "url": "https://owl.purdue.edu/owl/", "avgRating": 0, "remarkCount": 0}, {"name": "Top Doctors", "subject": "Health/Medical", "region": "National - USA", "description": "", "url": "", "avgRating": 0, "remarkCount": 0}, {"name": "Yellow Pages Directory", "subject": "General Research", "region": "National - USA", "description": "", "url": "https://www.yellowpages.com/", "avgRating": 0, "remarkCount": 0}], "remarks": [{"staff": "Diane", "resource": "City-Data.com", "rating": 3, "ratingDisplay": "★★★", "comment": "lala testing", "timestamp": "2026-06-26T09:36:52"}, {"staff": "Linnea", "resource": "Data USA", "rating": 4, "ratingDisplay": "★★★★", "comment": "TESTING this is an okay thing", "timestamp": "2026-07-29T18:10:18"}, {"staff": "Debbie", "resource": "City-Data.com", "rating": 1, "ratingDisplay": "★", "comment": "This one's not so great imo", "timestamp": "2026-07-29T18:41:19"}, {"staff": "Adrienne", "resource": "BBB | Better Business Bureau", "rating": 5, "ratingDisplay": "★★★★★", "comment": "love this resource", "timestamp": "2026-07-29T19:06:51"}, {"staff": "Diane", "resource": "City-Data.com", "rating": 1, "ratingDisplay": "★", "comment": "didn't find this great", "timestamp": "2026-07-29T18:47:58"}, {"staff": "Caitlyn", "resource": "City-Data.com", "rating": 4, "ratingDisplay": "★★★★", "comment": "lalala", "timestamp": "2026-07-29T18:59:05"}], "categories": ["Animals/Pets", "Art", "Civics/Elections", "Consumers", "Finance/Business", "Genealogy/Heritage", "General Research", "Geography", "Health/Medical", "History", "Housing", "Legal", "Music", "News", "Social Services", "Writing", "Youth"], "regions": ["Local - Northbrook/shore", "City - Chicago", "State - IL", "National - USA", "Continental - USA/Canada/Mexico", "International"], "staff": ["Adrienne", "Amy", "Bill", "Bryan", "Caitlyn", "Carla", "Debbie", "Diane", "Harvey", "Jill", "Joe", "Lori", "Lucy", "Margo", "Mary Lynn", "Paula", "Volunteers", "Brenna", "SAMM", "Lev", "Linnea", "Phil", "Tracy", "Susan"]};
 
-// ── HELPERS ───────────────────────────────────────────────
 function es(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function fd(ts){if(!ts)return'';try{const d=new Date(ts);return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+' '+d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});}catch(e){return ts;}}
 function navURL(url){const a=document.createElement('a');a.href=url;a.rel='noopener noreferrer';a.target='_blank';a.style.display='none';document.body.appendChild(a);a.click();document.body.removeChild(a);}
@@ -405,24 +404,21 @@ function st(avg,cnt){
   if(cnt!==undefined)h+=' <span style="font-size:.76rem;color:var(--m)">('+avg.toFixed(1)+', '+cnt+' remark'+(cnt!==1?'s':'')+')</span>';
   return h;
 }
+function ao(id,v){const e=document.getElementById(id);if(!e)return;const o=document.createElement('option');o.value=v;o.textContent=v;e.appendChild(o);}
 
-// ── SCREENS: LOGIN ────────────────────────────────────────
 function doLogin(e){
   e.preventDefault();
-  const u=document.getElementById('l-user').value, p=document.getElementById('l-pass').value;
-  if(u===CREDS.user&&p===CREDS.pass){
+  if(document.getElementById('l-user').value===CREDS.user&&document.getElementById('l-pass').value===CREDS.pass){
     document.getElementById('s-login').classList.add('off');
     document.getElementById('s-who').classList.remove('off');
     document.getElementById('who-sel').focus();
-  } else {
-    const err=document.getElementById('login-err'), box=document.querySelector('#s-login .box');
-    err.classList.add('show');
-    box.classList.remove('shake');void box.offsetWidth;box.classList.add('shake');
+  }else{
+    const err=document.getElementById('login-err'),box=document.querySelector('#s-login .box');
+    err.classList.add('show');box.classList.remove('shake');void box.offsetWidth;box.classList.add('shake');
     document.getElementById('l-pass').value='';document.getElementById('l-pass').focus();
   }
 }
 
-// ── WHO ARE YOU ───────────────────────────────────────────
 function onWhoChange(){
   const v=document.getElementById('who-sel').value;
   const isMaybe=MOD_NAMES.includes(v);
@@ -435,14 +431,11 @@ function doWho(){
   const name=document.getElementById('who-sel').value;
   if(!name){document.getElementById('who-err').classList.add('show');return;}
   document.getElementById('who-err').classList.remove('show');
-  const mp=document.getElementById('mod-pass').value;
-  isMod=MOD_NAMES.includes(name)&&mp===MOD_PASS;
+  isMod=MOD_NAMES.includes(name)&&document.getElementById('mod-pass').value===MOD_PASS;
   currentUser=name;
-  // Pre-fill submit forms
-  ['ss','nr-staff'].forEach(id=>{const el=document.getElementById(id);if(!el)return;for(let i=0;i<el.options.length;i++){if(el.options[i].value===name){el.selectedIndex=i;break;}}});
   const pill=isMod?' <span class="mod-pill">🛡️ MOD</span>':'';
   document.getElementById('hdr-user').innerHTML='👤 '+es(name)+pill;
-  if(isMod){document.getElementById('mod-res-bar').style.display='flex';}
+  if(isMod)document.getElementById('mod-res-bar').style.display='flex';
   document.getElementById('s-who').classList.add('off');
   document.getElementById('app').style.display='block';
   initApp();
@@ -452,24 +445,21 @@ function doLogout(){
   document.getElementById('app').style.display='none';
   document.getElementById('s-who').classList.add('off');
   document.getElementById('s-login').classList.remove('off');
-  document.getElementById('l-user').value='';document.getElementById('l-pass').value='';
+  ['l-user','l-pass','mod-pass'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('login-err').classList.remove('show');
-  document.getElementById('mod-pass').value='';
   document.getElementById('mod-field').style.display='none';
   document.getElementById('mod-hint').style.display='none';
   document.getElementById('mod-res-bar').style.display='none';
   ghToken='';currentUser='';isMod=false;D=null;
-  ['fs','fr2','fm','rfs','rfr','ss','nr-staff','who-sel','nr-subj-sel','nr-reg-sel'].forEach(id=>{
-    const el=document.getElementById(id);if(!el)return;
-    while(el.options.length>1)el.remove(1);el.selectedIndex=0;
+  ['fs','fr2','fm','rfs','rfr','ss','sr','nr-subj-sel','nr-reg-sel','nr-staff'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;while(el.options.length>1)el.remove(1);el.selectedIndex=0;
   });
   document.getElementById('l-user').focus();
 }
 
-// ── INIT ──────────────────────────────────────────────────
 async function initApp(){
   if(D)return;
-  D=await load(); calc(D); pop(); rg(); rr();
+  D=await load();calc(D);pop();rg();rr();
 }
 
 async function load(){
@@ -486,17 +476,23 @@ function calc(d){
 }
 
 function pop(){
-  const ss=new Set();
-  D.resources.forEach(r=>r.subject.split(',').forEach(s=>ss.add(s.trim())));
-  Array.from(ss).sort().forEach(s=>{ao('fs',s);ao('nr-subj-sel',s);});
-  D.regions.forEach(r=>{ao('fr2',r);ao('nr-reg-sel',r);});
-  D.staff.forEach(s=>{ao('ss',s);ao('rfs',s);ao('who-sel',s);ao('nr-staff',s);});
+  const existSubj=new Set(Array.from(document.getElementById('fs').options).map(o=>o.value).filter(Boolean));
+  ALL_SUBJ.forEach(s=>{if(!existSubj.has(s)){ao('fs',s);ao('nr-subj-sel',s);}});
+  D.resources.forEach(r=>r.subject.split(',').forEach(s=>{
+    const t=s.trim();
+    if(t&&!Array.from(document.getElementById('fs').options).find(o=>o.value===t)){ao('fs',t);ao('nr-subj-sel',t);}
+  }));
+  const existReg=new Set(Array.from(document.getElementById('fr2').options).map(o=>o.value).filter(Boolean));
+  ALL_REG.forEach(r=>{if(!existReg.has(r)){ao('fr2',r);ao('nr-reg-sel',r);}});
+  D.regions.forEach(r=>{if(!Array.from(document.getElementById('fr2').options).find(o=>o.value===r)){ao('fr2',r);ao('nr-reg-sel',r);}});
+  ALL_STAFF.forEach(s=>{ao('ss',s);ao('rfs',s);ao('nr-staff',s);});
+  ['ss','nr-staff'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    for(let i=0;i<el.options.length;i++){if(el.options[i].value===currentUser){el.selectedIndex=i;break;}}
+  });
   D.resources.slice().sort((a,b)=>a.name.localeCompare(b.name)).forEach(r=>{ao('sr',r.name);ao('rfr',r.name);});
 }
 
-function ao(id,v){const e=document.getElementById(id);if(!e)return;const o=document.createElement('option');o.value=v;o.textContent=v;e.appendChild(o);}
-
-// ── GRID ──────────────────────────────────────────────────
 function rg(list){
   const showHiddenRes=isMod&&document.getElementById('show-hidden-res')?.checked;
   list=(list||D.resources).filter(r=>showHiddenRes?true:!r.hidden);
@@ -505,22 +501,22 @@ function rg(list){
   document.getElementById('grid').innerHTML=list.map(r=>{
     const tags=r.subject.split(',').map(s=>'<span class="tag ts">'+es(s.trim())+'</span>').join('');
     const reg=r.region?'<span class="tag tr2">'+es(r.region)+'</span>':'';
-    const ne=r.name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    const ne=r.name.replace(/\/g,'\\').replace(/'/g,"\'");
     const hiddenBadge=r.hidden?'<span class="hidden-badge-res">hidden</span>':'';
     let modActs='';
     if(isMod){
       const hidBtn=r.hidden
-        ?'<button class="btn-card-mod restore" onclick="toggleResHide(\''+ne+'\',event)" title="Restore resource">↩ Restore</button>'
-        :'<button class="btn-card-mod" onclick="toggleResHide(\''+ne+'\',event)" title="Hide resource from all staff">🚫 Hide</button>';
+        ?'<button class="btn-card-mod restore" onclick="toggleResHide(''+ne+'',event)">↩ Restore</button>'
+        :'<button class="btn-card-mod" onclick="toggleResHide(''+ne+'',event)">🚫 Hide</button>';
       modActs='<div class="card-mod-actions show">'+hidBtn+'</div>';
     }
-    return '<div class="card'+(r.hidden?' hidden-resource':'')+'" onclick="om(\''+ne+'\')">'
+    return '<div class="card'+(r.hidden?' hidden-resource':'')+'" onclick="om(''+ne+'')">'
       +modActs
       +'<div class="ctop"><div class="cname">'+es(r.name)+hiddenBadge+'</div><div>'+st(r._avg)+'</div></div>'
       +'<div class="tags">'+tags+reg+'</div>'
       +'<div class="cdesc">'+es(r.description)+'</div>'
       +'<div style="display:flex;justify-content:space-between;margin-top:.2rem">'
-      +'<span class="clink" onclick="event.stopPropagation();navURL(\''+es(r.url)+'\')">↗ Visit resource</span>'
+      +'<span class="clink" onclick="event.stopPropagation();navURL(''+es(r.url)+'')">↗ Visit resource</span>'
       +'<span class="cnt">'+(r._cnt?r._cnt+' remark'+(r._cnt!==1?'s':''):'')+'</span>'
       +'</div></div>';
   }).join('');
@@ -543,7 +539,6 @@ function af(){
 }
 function cf(){['fk','fs','fr2','fm'].forEach(id=>{const e=document.getElementById(id);e.tagName==='INPUT'?e.value='':e.selectedIndex=0;});af();}
 
-// ── TOGGLE RESOURCE HIDE (MOD ONLY) ───────────────────────
 async function toggleResHide(name,event){
   if(event)event.stopPropagation();
   if(!isMod)return;
@@ -551,25 +546,23 @@ async function toggleResHide(name,event){
   const res=D.resources.find(r=>r.name===name);if(!res)return;
   const willHide=!res.hidden;
   if(!confirm((willHide?'Hide':'Restore')+' the resource "'+name+'" for all staff?'))return;
-  res.hidden=willHide; rg();
+  res.hidden=willHide;rg();
   try{
     const g=await fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}});
     if(!g.ok)throw new Error('API error '+g.status);
     const fd2=await g.json(),sha=fd2.sha;
     const cur=JSON.parse(atob(fd2.content.replace(/\n/g,'')));
-    const m=cur.resources.find(r=>r.name===name);
-    if(m)m.hidden=willHide;
+    const m=cur.resources.find(r=>r.name===name);if(m)m.hidden=willHide;
     const enc=btoa(unescape(encodeURIComponent(JSON.stringify(cur,null,2))));
     const p=await fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:(willHide?'Hide':'Restore')+' resource: "'+name+'"',content:enc,sha})});
     if(!p.ok)throw new Error('Write failed');
   }catch(e){res.hidden=!willHide;rg();alert('Could not save: '+e.message);}
 }
 
-// ── REMARKS TABLE ─────────────────────────────────────────
 function arf(){
-  const s=document.getElementById('rfs').value, r=document.getElementById('rfr').value;
+  const s=document.getElementById('rfs').value,r=document.getElementById('rfr').value;
   const showHidden=document.getElementById('show-hidden').checked;
-  let list=D.remarks.filter(x=>{
+  rr(D.remarks.filter(x=>{
     if(s&&x.staff!==s)return false;
     if(r&&x.resource!==r)return false;
     if(x.hidden){
@@ -577,8 +570,7 @@ function arf(){
       if(!isMod&&x.staff!==currentUser)return false;
     }
     return true;
-  });
-  rr(list);
+  }));
 }
 
 function rr(list){
@@ -586,15 +578,11 @@ function rr(list){
   document.getElementById('rcnt').textContent=list.length+' remark'+(list.length!==1?'s':'');
   document.getElementById('rno').style.display=list.length?'none':'block';
   document.getElementById('rtb').innerHTML=list.map(x=>{
-    const isOwn=x.staff===currentUser;
-    const canAct=isOwn||isMod;
+    const canAct=x.staff===currentUser||isMod;
     const isHidden=!!x.hidden;
     const idx=D.remarks.indexOf(x);
     let btn='';
-    if(canAct){
-      if(isHidden)btn='<button class="tbl-hide unhide" onclick="toggleHide('+idx+',event)">↩ Restore</button>';
-      else btn='<button class="tbl-hide" onclick="toggleHide('+idx+',event)">🚫 Hide</button>';
-    }
+    if(canAct)btn=isHidden?'<button class="tbl-hide unhide" onclick="toggleHide('+idx+',event)">↩ Restore</button>':'<button class="tbl-hide" onclick="toggleHide('+idx+',event)">🚫 Hide</button>';
     const hb=isHidden?' <span class="hidden-badge">(hidden)</span>':'';
     return '<tr class="'+(isHidden?'row-hidden':'')+'">'
       +'<td style="white-space:nowrap;font-size:.78rem">'+fd(x.timestamp)+'</td>'
@@ -605,7 +593,6 @@ function rr(list){
 }
 function crf(){document.getElementById('rfs').selectedIndex=0;document.getElementById('rfr').selectedIndex=0;arf();}
 
-// ── MODAL ─────────────────────────────────────────────────
 function om(name){
   const r=D.resources.find(x=>x.name===name);if(!r)return;
   modalResourceName=name;
@@ -639,18 +626,14 @@ function clov(e){if(e.target===document.getElementById('ov'))clom();}
 function clom(){document.getElementById('ov').classList.remove('on');}
 function goURL(){if(murl)navURL(murl);}
 
-// ── TOGGLE HIDE/RESTORE REMARK ────────────────────────────
 async function toggleHide(idx,event,fromModal){
   if(event)event.stopPropagation();
   if(!ghToken){alert('Please enter your GitHub token in the Submit a Remark tab first.');return;}
-  const remark=D.remarks[idx];
-  if(!remark)return;
-  const canAct=remark.staff===currentUser||isMod;
-  if(!canAct)return;
+  const remark=D.remarks[idx];if(!remark)return;
+  if(remark.staff!==currentUser&&!isMod)return;
   const willHide=!remark.hidden;
   if(!confirm((willHide?'Hide':'Restore')+' remark by '+remark.staff+' on "'+remark.resource+'"?'))return;
-  remark.hidden=willHide; calc(D); rg(); arf();
-  if(fromModal)renderModalRemarks();
+  remark.hidden=willHide;calc(D);rg();arf();if(fromModal)renderModalRemarks();
   try{
     const g=await fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}});
     if(!g.ok)throw new Error('API error '+g.status);
@@ -664,38 +647,21 @@ async function toggleHide(idx,event,fromModal){
   }catch(e){remark.hidden=!willHide;calc(D);rg();arf();if(fromModal)renderModalRemarks();alert('Could not save: '+e.message);}
 }
 
-// ── STAR PICKER ───────────────────────────────────────────
 function sr2(v){rat=v;us(v);}
 function sh2(v){us(v,true);}
 function rh(){us(rat);}
 function us(v){document.querySelectorAll('#sp button').forEach((b,i)=>b.classList.toggle('lit',i<v));}
 
-// ── PAT ───────────────────────────────────────────────────
-function savePAT(){
-  const v=document.getElementById('pi').value.trim();if(!v)return;
-  ghToken=v;document.getElementById('pi').value='';
+function savePAT(inputId){
+  const v=document.getElementById(inputId).value.trim();if(!v)return;
+  ghToken=v;document.getElementById(inputId).value='';
+  ['pb','pb2'].forEach(id=>{const pb=document.getElementById(id);pb.style.background='#d4edda';pb.style.borderColor='#b8dfc4';pb.style.color='#155724';});
   document.getElementById('tok').style.display='block';
-  syncPatBanner('pb','tok');
-  syncPatBanner('pb2','tok2');
-}
-function savePAT2(){
-  const v=document.getElementById('pi2').value.trim();if(!v)return;
-  ghToken=v;document.getElementById('pi2').value='';
-  syncPatBanner('pb','tok');
-  syncPatBanner('pb2','tok2');
-}
-function syncPatBanner(bannerId,tokId){
-  const pb=document.getElementById(bannerId);
-  const tok=document.getElementById(tokId);
-  tok.style.display='block';
-  pb.style.background='#d4edda';pb.style.borderColor='#b8dfc4';pb.style.color='#155724';
+  document.getElementById('tok2').style.display='block';
 }
 
-// ── SUBMIT REMARK ─────────────────────────────────────────
 async function doSubmit(){
-  const staff=document.getElementById('ss').value;
-  const res=document.getElementById('sr').value;
-  const comment=document.getElementById('sc').value.trim();
+  const staff=document.getElementById('ss').value,res=document.getElementById('sr').value,comment=document.getElementById('sc').value.trim();
   if(!staff||!res||!rat||!comment){ss2('fst','Please fill in all fields and select a rating.','err');return;}
   if(!ghToken){ss2('fst','Please enter your GitHub token above.','err');return;}
   document.getElementById('bsub').disabled=true;ss2('fst','Saving to GitHub…','load');
@@ -712,19 +678,17 @@ async function doSubmit(){
     const p=await fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:'Add remark: '+staff+' on "'+res+'"',content:enc,sha})});
     if(!p.ok){const err=await p.json().catch(()=>({}));throw new Error(err.message||'Write failed ('+p.status+')');}
     D.remarks.push(nr);calc(D);rg();arf();
-    document.getElementById('ss').value=currentUser||'';
-    document.getElementById('sr').selectedIndex=0;
-    document.getElementById('sc').value='';rat=0;us(0);
+    document.getElementById('ss').value=currentUser;
+    document.getElementById('sr').selectedIndex=0;document.getElementById('sc').value='';rat=0;us(0);
     ss2('fst','✅ Remark saved successfully!','ok');
   }catch(e){ss2('fst','❌ '+e.message,'err');}
   finally{document.getElementById('bsub').disabled=false;}
 }
 
-// ── SUBMIT NEW RESOURCE ────────────────────────────────────
-function onSubjSel(){const v=document.getElementById('nr-subj-sel').value;if(v)document.getElementById('nr-subj-new').value='';}
-function onSubjNew(){const v=document.getElementById('nr-subj-new').value;if(v)document.getElementById('nr-subj-sel').selectedIndex=0;}
-function onRegSel(){const v=document.getElementById('nr-reg-sel').value;if(v)document.getElementById('nr-reg-new').value='';}
-function onRegNew(){const v=document.getElementById('nr-reg-new').value;if(v)document.getElementById('nr-reg-sel').selectedIndex=0;}
+function onSubjSel(){if(document.getElementById('nr-subj-sel').value)document.getElementById('nr-subj-new').value='';}
+function onSubjNew(){if(document.getElementById('nr-subj-new').value)document.getElementById('nr-subj-sel').selectedIndex=0;}
+function onRegSel(){if(document.getElementById('nr-reg-sel').value)document.getElementById('nr-reg-new').value='';}
+function onRegNew(){if(document.getElementById('nr-reg-new').value)document.getElementById('nr-reg-sel').selectedIndex=0;}
 
 async function doNewResource(){
   const name=document.getElementById('nr-name').value.trim();
@@ -733,12 +697,10 @@ async function doNewResource(){
   const reg=(document.getElementById('nr-reg-new').value.trim()||document.getElementById('nr-reg-sel').value||'').trim();
   const desc=document.getElementById('nr-desc').value.trim();
   const staff=document.getElementById('nr-staff').value;
-
   if(!name||!url||!subj||!reg||!desc||!staff){ss2('nr-fst','Please fill in all required fields.','err');return;}
   if(!url.startsWith('http')){ss2('nr-fst','URL must start with https://','err');return;}
   if(D.resources.find(r=>r.name.toLowerCase()===name.toLowerCase())){ss2('nr-fst','A resource with that name already exists.','err');return;}
   if(!ghToken){ss2('nr-fst','Please enter your GitHub token above.','err');return;}
-
   document.getElementById('nr-bsub').disabled=true;ss2('nr-fst','Saving to GitHub…','load');
   try{
     const g=await fetch(API,{headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json'}});
@@ -747,41 +709,25 @@ async function doNewResource(){
     const cur=JSON.parse(atob(fd2.content.replace(/\n/g,'')));
     const newRes={name,subject:subj,region:reg,description:desc,url,avgRating:0,remarkCount:0,addedBy:staff,addedAt:new Date().toISOString().slice(0,19),hidden:false};
     cur.resources.push(newRes);
-    // Add new subject / region if not already present
     if(!cur.regions.includes(reg))cur.regions.push(reg);
     const enc=btoa(unescape(encodeURIComponent(JSON.stringify(cur,null,2))));
-    const p=await fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:'Add resource: "'+name+'" (submitted by '+staff+')',content:enc,sha})});
+    const p=await fetch(API,{method:'PUT',headers:{Authorization:'Bearer '+ghToken,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:JSON.stringify({message:'Add resource: "'+name+'" (by '+staff+')',content:enc,sha})});
     if(!p.ok){const err=await p.json().catch(()=>({}));throw new Error(err.message||'Write failed ('+p.status+')');}
-    // Update local state
     const localRes={...newRes,_avg:0,_cnt:0};
     D.resources.push(localRes);
     if(!D.regions.includes(reg))D.regions.push(reg);
-    // Add new subjects to filter
-    subj.split(',').forEach(s=>{
-      const t=s.trim();
-      if(t&&!Array.from(document.getElementById('fs').options).find(o=>o.value===t)){
-        ao('fs',t);ao('nr-subj-sel',t);
-      }
-    });
+    subj.split(',').forEach(s=>{const t=s.trim();if(t&&!Array.from(document.getElementById('fs').options).find(o=>o.value===t)){ao('fs',t);ao('nr-subj-sel',t);}});
     if(!Array.from(document.getElementById('fr2').options).find(o=>o.value===reg)){ao('fr2',reg);ao('nr-reg-sel',reg);}
-    ao('sr',name);ao('rfr',name);
-    rg();
-    // Reset form
+    ao('sr',name);ao('rfr',name);rg();
     ['nr-name','nr-url','nr-subj-new','nr-reg-new','nr-desc'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('nr-subj-sel').selectedIndex=0;
-    document.getElementById('nr-reg-sel').selectedIndex=0;
+    document.getElementById('nr-subj-sel').selectedIndex=0;document.getElementById('nr-reg-sel').selectedIndex=0;
     document.getElementById('nr-staff').value=currentUser;
     ss2('nr-fst','✅ "'+name+'" added to the database!','ok');
   }catch(e){ss2('nr-fst','❌ '+e.message,'err');}
   finally{document.getElementById('nr-bsub').disabled=false;}
 }
 
-// ── UTILS ─────────────────────────────────────────────────
-function sw(id,btn){
-  document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('on'));
-  document.getElementById('p-'+id).classList.add('on');btn.classList.add('on');
-}
+function sw(id,btn){document.querySelectorAll('.pane').forEach(p=>p.classList.remove('on'));document.querySelectorAll('nav button').forEach(b=>b.classList.remove('on'));document.getElementById('p-'+id).classList.add('on');btn.classList.add('on');}
 function ss2(elId,msg,type){const e=document.getElementById(elId);e.textContent=msg;e.className='fst '+type;}
 
 document.getElementById('l-user').focus();
